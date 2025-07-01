@@ -1,0 +1,218 @@
+.profileBlock{
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    padding-left: 50px;
+}
+
+.selectHeader {
+    display: flex;
+    flex-direction: row;
+    height:35px;
+
+    color:aliceblue;
+
+    a {
+        width:20%;
+        color:aliceblue;
+        background-color: rgba(165, 165, 165, 0.22);
+        text-decoration: none;
+
+        text-align: center;
+        display: flex;
+        align-items: center;      
+        justify-content: center;
+    
+        font-size: 16px;
+        // border: 0.1px solid rgb(143, 143, 143);
+        border: none;
+        
+    };
+
+    a:hover {
+        background-color: rgba(255, 255, 255, 0.088);
+    }
+
+    .selectedInfoPage {
+        background-color: rgba(255, 255, 255, 0.088);
+        border: solid 1px rgba(165, 165, 165, 0.22);
+    }
+}
+
+
+hr {
+    size: 1px;
+}
+
+.allInfo{
+    color:aliceblue;
+    font-family: "Calibri";
+    font-size: 18px;
+    margin-top:20px;
+    width: auto;
+    height: auto;
+
+    display: flex;
+    flex-direction:column;
+
+}
+
+.userInfo{
+    display: flex;
+
+    // align-items: center;
+    // justify-content: center;
+}
+
+.userAvatar{
+    width: 90px; 
+    height: 90px;
+    border: solid 1px black;
+    object-fit: cover;
+    object-position: center; 
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.personalInfo{
+    display: flex;
+    flex-direction: column; 
+    justify-content: end;
+    height: 55%;
+}
+
+
+.registerDate{
+    display: flex;
+    flex-direction: column; 
+    justify-content: end;
+    height: 45%;
+    
+    font-size: 14px;
+    color: #80eae0;
+}
+
+.userStats{
+    margin-top: 20px;
+    display: flex;
+    flex-direction:column;
+}
+
+.userHistory{
+    display: flex;
+    flex-direction: row;
+    width: 98%;
+    margin-top: 20px;
+    // margin-right: 35px;
+}
+
+.historyHeader{
+    display: flex;
+    justify-content: space-evenly;
+    color: aliceblue;
+    font-family: "Calibri";
+    font-size: 18px;
+    // align-items:flex-end;
+}
+
+.gameHistoryRow{
+    width: 70%;
+    color: aliceblue;
+    font-family: "Calibri";
+    font-size: 18px;
+
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+
+}
+
+.gameIncomeRow{
+    width: 30%;
+    color: aliceblue;
+    font-family: "Calibri";
+    font-size: 18px;
+
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+
+
+.gameHistoryInfo {
+    color: aliceblue;
+    width: 100%;
+    height: 80px;
+    border-style: solid;
+    border-color: aliceblue;
+    // border-bottom-width: 1px;
+    // border-right-width: 1px;
+    border-width: 0px 1px 1px 0px;
+    
+
+    display: flex;
+    // justify-content: center;
+    align-items: center;
+
+}
+
+.gameHistoryInfo:last-of-type{
+    color:aquamarine;
+    align-self: center;
+}
+
+
+.incomeInfo {
+    color: aliceblue;
+    width: 100%;
+    height: 80px;
+    border-bottom-style: solid;
+    border-bottom-color: aliceblue;
+    border-bottom-width: 1px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.depositeFormBlock{
+    margin-left: 1%;
+    margin-top: 1%;
+    width:15%;
+    height: auto;
+}
+
+.depositForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    input {
+        border-width: 1px;
+        background-color: rgba(199, 199, 199, 0.708);
+        // color: rgba(255, 255, 255, 0.729);
+        padding:5px;
+        margin-bottom: 5px;
+        width: 100%;
+    }
+
+    button{
+        background-color: rgba(199, 199, 199, 0.6);
+        width: 100%;
+        padding:5px;
+        border-width: 1px;
+        color: rgba(247, 240, 255, 0.729);
+    }
+
+    button:hover{
+        color: rgb(255, 255, 255);
+        background-color: rgba(199, 199, 199, 0.784);
+    }
+}
+
+.MYCVLine{
+    display: flex;
+    flex-direction: row;
+}

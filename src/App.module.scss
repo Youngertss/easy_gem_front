@@ -1,0 +1,24 @@
+.mainPart {
+    display: flex;
+    margin-top: 25px;
+}
+
+.mainPartBlured {
+    filter: blur(5px);
+    display: flex;
+    margin-top: 25px;
+}
+
+.wrapperBlured{
+    filter: blur(5px);
+    height: 100%;
+    width: 100%;
+}
+
+
+.content{
+    width: 100%;
+    color:aliceblue;
+    font-family: "Calibri";
+    font-size: 18px;
+}

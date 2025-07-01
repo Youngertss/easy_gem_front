@@ -1,0 +1,18 @@
+.sidebar {
+    margin-left: 35px;
+}
+.page {
+    list-style: none;
+    margin-bottom: 8px;
+    a {
+        font-size: 20px;
+        color: #aaa7a8;
+        text-decoration: none;
+    }
+}
+
+.activePage {
+    a {
+        color: white;
+    }
+}

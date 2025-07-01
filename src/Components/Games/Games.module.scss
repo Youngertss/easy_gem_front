@@ -1,0 +1,44 @@
+.gameLayer{
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: row;
+    // align-content: center;
+    // justify-content: center;
+}
+
+.wheelBlock{
+    position: relative;
+    margin-left:15%;
+}
+
+.wheel {
+    height: 450px;
+    width: auto;
+
+    // transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
+    // transform: rotate(1140deg);
+}
+
+.arrowUp{
+    position: absolute;
+    height:50px;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-53%, -70%);
+
+    z-index: 2;
+}
+
+.gameInfo{
+    height: 450px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 10px;
+    font-size: 24px;
+}

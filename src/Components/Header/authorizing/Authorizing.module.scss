@@ -1,0 +1,110 @@
+.modalOverlay{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Полупрозрачный фон */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Чтобы быть поверх всего контента */
+    top: 0;
+    left: 0;
+    border:none; 
+}
+
+.modalOverlay:hover{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Полупрозрачный фон */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Чтобы быть поверх всего контента */
+    top: 0;
+    left: 0;
+    border:none; 
+}
+
+.modalContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color:azure;
+    background-color: #8148ac;
+    border: 1px solid #52588c;
+
+    width: 100%;
+    height: auto;
+    max-width: 450px;
+    max-height: 300px;
+    margin-bottom: 50px;
+}
+.modalContent > form {
+    font-size: 17px;
+    display: flex;
+    flex-direction: column;
+    // margin-right: 10%;
+    align-content: space-around;
+}
+
+.modalContent>h2{
+    align-items:center;
+    padding-top: 10px;
+    padding-bottom: 25px;
+}
+.modalContent>form>button{
+    padding: 5px;
+    // margin-top: 10px;
+    margin-bottom: 10px;
+    align-self: center;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    background: #b850e5;
+    transition: 0.3s;
+}
+// input[type="submit"]
+.modalContent>form>button:hover{
+    cursor: pointer;
+    background: #9d50e5;
+}
+
+
+.formGroup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+// .formLabel {
+//     display: flex;
+//     flex-direction: row;
+//     align-items:end;
+//     justify-content: space-between;
+// }
+
+.modalContent>form>h2{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.formGroup>label {
+    flex: 1;
+    padding-right: 10px;
+    text-align: right;
+}
+  
+.formGroup>input {
+    flex: 2;
+    padding: 5px;
+    max-width: 80%;
+}
+
+.modalContent>form>button {
+    margin-top: 30px;
+    width: 60%;
+    margin-bottom: 20px;
+}
