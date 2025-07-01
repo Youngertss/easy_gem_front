@@ -85,6 +85,8 @@ export const UserProfile: React.FC<ProfileProps> = ({userData}) =>{
             });
             const avatarPath = response.data.avatar_url; // path to picture
             setAvatarPreview(avatarPath);
+            window.location.reload();
+            
         } catch (error) {
             console.error("Ошибка при загрузке аватара:", error);
         }
