@@ -1,6 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import s from "./Games.module.scss";
 import axios from "axios";
+
+import {FortuneWheelCanvas} from "./GameCanvas/FortuneWheelCanvas";
 
 interface UserData {
     id: number;
@@ -22,82 +24,14 @@ interface GameData{
 }
 
 const labels=["10$","0$","999$","5$","1$","20$", "50$","2$","15$","1$", "100$","5$"]
-const colors=["#9966FF", "#C9CBCF", "#FF6384", "#FFCE56", "#00A877"]
 
 export const FortuneWheel: React.FC<Props> = ({ userData }) => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
     const [abilityRotation, setAbilityRotation] = useState(true);
     const [angle, setAngle] = useState(0);
-    const [win, setWin] = useState(0);
+    // const [win, setWin] = useState(0);
     const [gameData, setGameData] = useState<GameData | null>(null);;
 
     const sectorAngle = 360 / labels.length;
-
-    // Drawin the wheel
-    const drawWheel = (context: CanvasRenderingContext2D, currentAngle: number) => {
-        const centerX = context.canvas.width / 2;
-        const centerY = context.canvas.height / 2;
-        const radius = 150; //also the length of borders in sectors
-
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
-        for (let i = 0; i < labels.length; i++) {
-            const start = (i * sectorAngle + currentAngle) * Math.PI / 180;
-            const end = ((i + 1) * sectorAngle + currentAngle) * Math.PI / 180;
-
-            // Sector
-            context.beginPath();
-            context.moveTo(centerX, centerY);
-            context.arc(centerX, centerY, radius, start, end);
-
-            //choose a color for sector
-            const currPrize = parseInt(labels[i].slice(0, -1));
-            let currColor = colors[3]; //jackpot - yellow
-
-            if (currPrize < 5 ){
-                currColor = colors[1]; //grey
-            }  else if(currPrize==5){
-                currColor = colors[2]; //red
-            } else if (currPrize <= 20){
-                currColor = colors[4]; //green
-            } else if (currPrize <= 100){
-                currColor = colors[0]; //purple
-            }
-
-            context.fillStyle = currColor;
-            context.fill();
-            context.stroke();
-
-            // Label
-            context.save();
-            context.translate(centerX, centerY); //moving center back to center
-            context.rotate((start + end) / 2); //rotating the text
-            context.textAlign = "right";
-            context.fillStyle = "black";
-            context.font = "16px sans-serif";
-            context.fillText(labels[i], radius - 10, 5); //gap from center
-            context.restore();
-        }
-
-        // Стрелка
-        context.beginPath();
-        context.moveTo(centerX - 10, centerY + 2); //left point
-        context.lineTo(centerX, centerY - 18); //upper point
-        context.lineTo(centerX + 10, centerY + 2); //right point
-        context.fillStyle = "red";
-        context.fill();
-    };
-
-    //drawing a wheel basing on curr angle 
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-
-        const context = canvas.getContext("2d");
-        if (!context) return;
-
-        drawWheel(context, angle);
-    }, [angle]);
 
     //initialization for data game and wheel
     useEffect(() => {
@@ -114,28 +48,34 @@ export const FortuneWheel: React.FC<Props> = ({ userData }) => {
             setGameData(gameDataCurr.data);
             console.log(gameData);
         };
-
         getGameData();
-        setAngle((360/labels.length) / 2);
+        setAngle(sectorAngle / 2);
     }, []);
 
+    //fortune wheel api info + start animation
     const spinWheel = async () => {
         if (!abilityRotation) return;
         setAbilityRotation(false);
 
-        const response = await axios.get(`/games/get_fortune_wheel_event`);
+        const response = await axios.get(`/games/get_fortune_wheel_event`, {
+            withCredentials: true
+        });
+
         const rotation = response.data.degree;
         const income = response.data.income;
-        setWin(income);
+        // setWin(income);
 
-        animateRotation(rotation);
+        animateRotation(rotation, income);
     };
-
+    //for tst withpu API
     const spinWheelTest = async () => {
-        animateRotation(1140);
-    };
+        if (!abilityRotation) return;
+        setAbilityRotation(false);
 
-    const animateRotation = (targetRotation: number) => {
+        animateRotation(1140, 0);
+    };
+    //animation
+    const animateRotation = (targetRotation: number, income: number) => {
         const start = performance.now();
         const duration = 4000;
         const initialAngle = angle;
@@ -151,10 +91,10 @@ export const FortuneWheel: React.FC<Props> = ({ userData }) => {
             if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
-                // Get the winner`s sector
-                alert(`You won some sum!`);
+                // Congretulate user
+                alert(`You won ${income}!`);
                 setAbilityRotation(true);
-                setAngle(0);
+                setAngle(sectorAngle/2);
             }
         };
 
@@ -166,13 +106,7 @@ export const FortuneWheel: React.FC<Props> = ({ userData }) => {
     return (
         <div className={s.gameLayer}>
             <div className={s.wheelBlock}>
-                <canvas ref={canvasRef} width={400} height={400} className={s.wheel} onClick={spinWheelTest}/>
-                {/* <img
-                    src="/imgs/games/arrow_up.png"
-                    className={s.arrowUp}
-                    alt="arrowUp"
-                    onClick={spinWheelTest}
-                /> */}
+                <FortuneWheelCanvas labels={labels} sectorAngle={sectorAngle} angle={angle} spinWheelTest={spinWheelTest}/>
             </div>
             <div className={s.gameInfo}>
                 <p>Cost: {gameData?.data.cost}$</p>
