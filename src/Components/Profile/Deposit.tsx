@@ -13,7 +13,6 @@ export const Deposit = () =>{
 
     const user = useUserStore((set) => set.user);
     const setUser = useUserStore((set) => set.setUser);
-    const token = useUserStore((set) => set.accessToken);
 
     if (!user) return <p>You have to Log in</p>;
 
@@ -25,9 +24,7 @@ export const Deposit = () =>{
             res = await axios.patch("/games/deposit",
                 { sum : parseInt(sum) }, 
                 {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                    withCredentials: true
                 });    
             setUser({
                 ...user,

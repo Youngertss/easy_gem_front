@@ -20,25 +20,22 @@ interface UserState {
     user: UserData | null;
     setUser: (user: UserData | null) => void;
     fetchUser: () => Promise<void>;
-    accessToken: string | null;
-    setAccessToken: (accessToken: string | null) => void;
 }
 
 export const useUserStore = create<UserState>()(
     persist(
         (set, get) => ({
-            accessToken: null,
-            setAccessToken: (accessToken) => set({ accessToken }),
             user: null,
             setUser: (user) => set({ user }),
             fetchUser: async () => {
-                const token = get().accessToken;
-                if (!token) return;
-
-                const res = await axios.get("/users/me", {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                set({ user: res.data });
+                try{
+                    const res = await axios.get("/users/me", {
+                        withCredentials: true
+                    });
+                    set({ user: res.data });
+                } catch (e){
+                    console.log(e);
+                }
             }
         }),
         {

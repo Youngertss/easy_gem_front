@@ -9,7 +9,6 @@ import {SelectionHeader} from "./SelectionHeader"
 
 export const UserProfile = () =>{
     const userData = useUserStore((set) => set.user)
-    const token = useUserStore((set) => set.accessToken)
     const fetchUser = useUserStore((state) => state.fetchUser)
 
     const [favGame, setFavGame] = useState<string>("-");
@@ -66,9 +65,7 @@ export const UserProfile = () =>{
 
         try {
             const response = await axios.post("/users/upload_photo", formData, {
-                headers: { "Content-Type": "multipart/form-data" ,
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { "Content-Type": "multipart/form-data"},
                 withCredentials: true,
             });
             const avatarPath = response.data.avatar_url; // path to picture

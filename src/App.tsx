@@ -24,8 +24,6 @@ import axios from "axios";
 const App = () => {
     const fetchUser = useUserStore((set) => set.fetchUser)
     const setUser = useUserStore((set) => set.setUser)
-    const accessToken = useUserStore((set) => set.accessToken);
-    const setAccessToken = useUserStore((set) => set.setAccessToken);
 
     const [isModalRegistrationOpen, setIsModalRegistrationOpen] = useState(false);
     const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
@@ -40,13 +38,13 @@ const App = () => {
         try {
             const response = await axios.post("/auth/jwt/logout", null, {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    withCredentials: true,
                 },
             });
 
             console.log("User is logged OUT", response);
             setUser(null); 
-            setAccessToken(null);
+
         } catch (err: any){
             console.error("Error while logout", err.response?.data || err.message);
             alert("Error while logout: " + (err.response?.data || "unknown error"));

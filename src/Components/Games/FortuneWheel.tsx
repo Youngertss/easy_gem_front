@@ -19,7 +19,6 @@ const labels=["10$","0$","999$","5$","1$","20$", "50$","2$","15$","1$", "100$","
 export const FortuneWheel = () => {
     const userData = useUserStore((set) => set.user);
     const setUser = useUserStore((set) => set.setUser);
-    const token = useUserStore((set) => set.accessToken);
 
     const [abilityRotation, setAbilityRotation] = useState(true);
     const [angle, setAngle] = useState(0);
@@ -62,9 +61,7 @@ export const FortuneWheel = () => {
         let response;
         try {
             response = await axios.get(`/games/get_fortune_wheel_event`, {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                }
+                withCredentials: true
             });
         } catch (error:any){
             if (axios.isAxiosError(error)) {

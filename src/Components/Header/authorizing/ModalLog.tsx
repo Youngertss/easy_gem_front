@@ -13,7 +13,6 @@ export const ModalLog:React.FC<ModalProps> = ({ closeModal }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const setAccessToken = useUserStore((state) => state.setAccessToken)
     const fetchUser = useUserStore((state) => state.fetchUser)
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -31,8 +30,6 @@ export const ModalLog:React.FC<ModalProps> = ({ closeModal }) => {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
             });
-            const token = response.data.access_token;
-            setAccessToken(token);
 
             console.log("Response is OK", response);
             closeModal();
