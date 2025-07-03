@@ -14,7 +14,7 @@
 }
 
 .wheel {
-    height: 500px;
+    height: 600px;
     width: auto;
 
     // transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
@@ -33,12 +33,69 @@
 }
 
 .gameInfo{
-    height: 450px;
+    height: 700px;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
 
     gap: 10px;
-    font-size: 24px;
+    font-size: 34px;
+};
+
+.prizeBlockOverlay{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Полупрозрачный фон */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Чтобы быть поверх всего контента */
+    top: 0;
+    left: 0;
+    border:none; 
+};
+
+.prizeBlock{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    height: 350px;
+    width: 500px;
+    background-color: rgb(198, 152, 255);
+    border: 1px solid #52588c;
+    font-size: 36px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color:azure;
+};
+
+.buttons{
+    display: flex;
+    gap:10px;
+    margin-top: 50px;
+    button {
+        background-color: rgba(255, 255, 255, 0.212);
+        border-color:azure;
+        height: 50px;
+        width: 140px;
+        font-size: 16px;
+        border: solid 1px rgb(212, 177, 255);
+        color: rgb(134, 53, 172);
+    }
+
+    button:hover{
+        background-color: rgba(255, 255, 255, 0.212);
+        border-color:azure;
+        cursor:pointer;
+        background-color: rgba(255, 255, 255, 0.28);
+    }
+}
+
+.jackpot{
+    color:rgba(255, 227, 15, 0.89);
+    font-family: fantasy;
+    font-size: 55px;
 }

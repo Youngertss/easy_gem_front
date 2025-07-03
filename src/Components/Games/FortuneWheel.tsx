@@ -3,17 +3,8 @@ import s from "./Games.module.scss";
 import axios from "axios";
 
 import {FortuneWheelCanvas} from "./GameCanvas/FortuneWheelCanvas";
-
-interface UserData {
-    id: number;
-    email: string;
-    username: string;
-    balance: string;
-}
-
-interface Props {
-    userData: UserData | null;
-}
+import { useUserStore } from "../../store/userStore";
+import {PrizeWindow} from "./PrizeWindow";
 
 interface GameData{
     name: string
@@ -25,14 +16,23 @@ interface GameData{
 
 const labels=["10$","0$","999$","5$","1$","20$", "50$","2$","15$","1$", "100$","5$"]
 
-export const FortuneWheel: React.FC<Props> = ({ userData }) => {
+export const FortuneWheel = () => {
+    const userData = useUserStore((set) => set.user);
+    const setUser = useUserStore((set) => set.setUser);
+    const token = useUserStore((set) => set.accessToken);
+
     const [abilityRotation, setAbilityRotation] = useState(true);
     const [angle, setAngle] = useState(0);
-    // const [win, setWin] = useState(0);
     const [gameData, setGameData] = useState<GameData | null>(null);;
-
+    const [win, setWin] = useState(0);
+    const [showPrize, setShowPrize] = useState(false);
+ 
     const sectorAngle = 360 / labels.length;
 
+    const closeWindow = () => {
+        setShowPrize(false); 
+        setAngle(sectorAngle/2)
+    };
     //initialization for data game and wheel
     useEffect(() => {
         const getGameData = async () => { 
@@ -42,8 +42,7 @@ export const FortuneWheel: React.FC<Props> = ({ userData }) => {
                 },
                 headers: {
                     "Content-Type": "application/json",
-                },
-                withCredentials: true,
+                }
             });  
             setGameData(gameDataCurr.data);
             console.log(gameData);
@@ -52,22 +51,45 @@ export const FortuneWheel: React.FC<Props> = ({ userData }) => {
         setAngle(sectorAngle / 2);
     }, []);
 
+    if (!userData || !gameData) return null;
+
     //fortune wheel api info + start animation
     const spinWheel = async () => {
         if (!abilityRotation) return;
         setAbilityRotation(false);
+        setAngle(sectorAngle/2);
 
-        const response = await axios.get(`/games/get_fortune_wheel_event`, {
-            withCredentials: true
-        });
-
+        let response;
+        try {
+            response = await axios.get(`/games/get_fortune_wheel_event`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                }
+            });
+        } catch (error:any){
+            if (axios.isAxiosError(error)) {
+                if (error.response?.status === 403) {
+                    alert(error.response.data.detail); // "Not enough credits"
+                } else{
+                    console.log(error);
+                };
+        }};
+        if (!response) return; 
+        console.log(response.data)
         const rotation = response.data.degree;
         const income = response.data.income;
         // setWin(income);
 
+        setUser({ //reload mini-profile balance
+            ...userData,
+            balance: userData.balance - gameData.data.cost
+        }); 
+
+
         animateRotation(rotation, income);
     };
-    //for tst withpu API
+
+    //for test without API
     const spinWheelTest = async () => {
         if (!abilityRotation) return;
         setAbilityRotation(false);
@@ -77,7 +99,7 @@ export const FortuneWheel: React.FC<Props> = ({ userData }) => {
     //animation
     const animateRotation = (targetRotation: number, income: number) => {
         const start = performance.now();
-        const duration = 4000;
+        const duration = 6000;
         const initialAngle = angle;
 
         const animate = (time: number) => {
@@ -85,23 +107,28 @@ export const FortuneWheel: React.FC<Props> = ({ userData }) => {
             const progress = Math.min(elapsed / duration, 1); //number in range from 0 to 1
             const easing = 1 - Math.pow(1 - progress, 3); // ease-out
 
-            const newAngle = (initialAngle + easing * targetRotation) % 360; 
+            const newAngle = (initialAngle - easing * targetRotation + 360) % 360; 
             setAngle(newAngle);
 
             if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
                 // Congretulate user
-                alert(`You won ${income}!`);
+                setUser({ //reload mini-profile balance
+                    ...userData,
+                    balance: userData.balance + (income - gameData.data.cost)
+                });
+
+                setWin(income);
+                setShowPrize(true);
+                
                 setAbilityRotation(true);
-                setAngle(sectorAngle/2);
             }
         };
 
         requestAnimationFrame(animate);
     };
 
-    if (!userData) return null;
 
     return (
         <div className={s.gameLayer}>
@@ -109,9 +136,10 @@ export const FortuneWheel: React.FC<Props> = ({ userData }) => {
                 <FortuneWheelCanvas labels={labels} sectorAngle={sectorAngle} angle={angle} spinWheelTest={spinWheelTest}/>
             </div>
             <div className={s.gameInfo}>
-                <p>Cost: {gameData?.data.cost}$</p>
-                <p onClick={spinWheel} style={{ cursor: 'pointer', color: 'blue' }}>Play!</p>
+                <p style={{ cursor: 'pointer', color: 'rgb(239, 255, 228)' }}>Cost: {gameData.data.cost}$</p>
+                <p onClick={spinWheel} style={{ cursor: 'pointer', color: 'rgb(253, 255, 146)' }}>Play!</p>
             </div>
+            {showPrize ? <PrizeWindow income={win} closeWindow={closeWindow} spinWheel={spinWheel}/> : ""}
         </div>
     );
 };

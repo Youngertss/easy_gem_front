@@ -1,25 +1,19 @@
 import s from "./Header.module.scss";
 import { UserDropdown } from "./userDropdown"
+import { useUserStore } from "../../store/userStore";
 
 import {useState} from "react";
 
-interface UserData {
-    id: number;
-    email: string;
-    username: string;
-    balance: string;
-    photo: string;
-}
 
 interface AccountProps {
     openLoggining: () => void;
     openRegistration: () => void;
     onLogout: () => void;
-    userData: UserData | null;
 }
 
-export const Account: React.FC<AccountProps> = ({openLoggining, openRegistration, onLogout, userData}) => {
+export const Account: React.FC<AccountProps> = ({openLoggining, openRegistration, onLogout}) => {
     const [showDropdown, setShowDropdown] = useState(false);
+    const userData = useUserStore((state) => state.user)
 
     if (userData){
         return (

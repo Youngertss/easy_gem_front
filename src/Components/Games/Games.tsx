@@ -7,20 +7,15 @@ import sss from "../../imgs/gamesPictures/sss.png";
 import CherryBoom from "../../imgs/gamesPictures/CherryBoom.png";
 import FortuneWheelPic from "../../imgs/gamesPictures/FortuneWheelPic.jpg";
 
-interface UserData{
-    id: number;
-    email: string;
-    username: string;
-    balance: string;
-    photo: string;
-}
+import { useUserStore } from "../../store/userStore";
 
 interface Props{
-    userData: UserData | null;
     openLoggining: () => void;
 }
 
-export const Games: React.FC<Props> = ({userData, openLoggining}) => {
+export const Games: React.FC<Props> = ({ openLoggining}) => {
+    const userData = useUserStore((set) => set.user);
+
     const navigate = useNavigate();
 
     const handleGameClick = (path: string) => {
@@ -31,7 +26,6 @@ export const Games: React.FC<Props> = ({userData, openLoggining}) => {
             navigate(path);
         }
     };
-
 
     return (
         <div className={s.layout}>

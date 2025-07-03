@@ -1,31 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
 import s from "./Profile.module.scss";
 import axios from "axios";
-
 import {useNavigate} from "react-router-dom";
 
+import { useUserStore } from "../../store/userStore";
 import {SelectionHeader} from "./SelectionHeader"
 
-interface UserData {
-    id: number;
-    email: string;
-    username: string;
-    balance: string;
-    photo: string;
-    created_at: string;
-    is_verifyed: boolean;
 
-    total_deposit: number,
-    total_withdrawn: number,
-    total_withdrawals: number,
-    favorite_game_id: number | null;
-}
+export const UserProfile = () =>{
+    const userData = useUserStore((set) => set.user)
+    const token = useUserStore((set) => set.accessToken)
+    const fetchUser = useUserStore((state) => state.fetchUser)
 
-interface ProfileProps{
-    userData: UserData | null;
-}
-
-export const UserProfile: React.FC<ProfileProps> = ({userData}) =>{
     const [favGame, setFavGame] = useState<string>("-");
     const navigate = useNavigate();
 
@@ -80,13 +66,15 @@ export const UserProfile: React.FC<ProfileProps> = ({userData}) =>{
 
         try {
             const response = await axios.post("/users/upload_photo", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
+                headers: { "Content-Type": "multipart/form-data" ,
+                    Authorization: `Bearer ${token}`,
+                },
                 withCredentials: true,
             });
             const avatarPath = response.data.avatar_url; // path to picture
             setAvatarPreview(avatarPath);
-            window.location.reload();
-            
+            fetchUser();
+    
         } catch (error) {
             console.error("Ошибка при загрузке аватара:", error);
         }

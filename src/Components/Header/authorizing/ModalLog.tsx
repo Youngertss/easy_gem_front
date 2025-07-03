@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import axios from "axios";
 import s from "./Authorizing.module.scss";
 
+import { useUserStore } from "../../../store/userStore";
+
 interface ModalProps {
     closeModal: () => void;
 }
@@ -10,6 +12,9 @@ interface ModalProps {
 export const ModalLog:React.FC<ModalProps> = ({ closeModal }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const setAccessToken = useUserStore((state) => state.setAccessToken)
+    const fetchUser = useUserStore((state) => state.fetchUser)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -26,10 +31,12 @@ export const ModalLog:React.FC<ModalProps> = ({ closeModal }) => {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
             });
+            const token = response.data.access_token;
+            setAccessToken(token);
 
             console.log("Response is OK", response);
             closeModal();
-            window.location.reload();
+            fetchUser();
         } catch (err: any){
             console.error("Ошибка входа:", err.response?.data || err.message);
             alert("Ошибка входа: " + (err.response?.data || "неизвестная ошибка"));

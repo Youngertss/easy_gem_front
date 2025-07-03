@@ -1,22 +1,48 @@
 import React, {useState} from "react";
 import s from "./Profile.module.scss";
-import {SelectionHeader} from "./SelectionHeader"
+import {SelectionHeader} from "./SelectionHeader";
+import { useUserStore } from "../../store/userStore";
 
-export const Deposite = () =>{
+import axios from "axios";
+
+export const Deposit = () =>{
     const [card, setCard] = useState("");
     const [MY, setMY] = useState("");
     const [CD, setCD] = useState("");
     const [sum, setSum] = useState("");
 
+    const user = useUserStore((set) => set.user);
+    const setUser = useUserStore((set) => set.setUser);
+    const token = useUserStore((set) => set.accessToken);
+
+    if (!user) return <p>You have to Log in</p>;
+
 
     const handleDeposite = async (e: React.FormEvent) => {
         e.preventDefault();
+        let res;
+        try{
+            res = await axios.patch("/games/deposit",
+                { sum : parseInt(sum) }, 
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });    
+            setUser({
+                ...user,
+                balance: user.balance + parseInt(sum)
+            }); 
+        } catch(error){
+            console.log(error);
+        }
+        console.log(res);
 
         setCard("");
         setMY("");
         setCD("");
         setSum("");
-    }
+    };
 
 
     return(

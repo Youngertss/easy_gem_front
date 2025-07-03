@@ -14,14 +14,19 @@ import { Bonuses } from "./Components/Bonuses/Bonuses";
 import { Chat } from "./Components/Chat/Chat";
 import { FAQ } from "./Components/FAQ/FAQ";
 import { UserProfile } from "./Components/Profile/UserProfile";
-import { Deposite } from "./Components/Profile/Deposite";
+import { Deposit } from "./Components/Profile/Deposit";
 import { Settings } from "./Components/Profile/Settings";
 import { RefferalProgram } from "./Components/Profile/RefferalProgram";
 
+import { useUserStore } from "./store/userStore";
 import axios from "axios";
 
 const App = () => {
-    const [user, setUser] = useState(null);
+    const fetchUser = useUserStore((set) => set.fetchUser)
+    const setUser = useUserStore((set) => set.setUser)
+    const accessToken = useUserStore((set) => set.accessToken);
+    const setAccessToken = useUserStore((set) => set.setAccessToken);
+
     const [isModalRegistrationOpen, setIsModalRegistrationOpen] = useState(false);
     const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
 
@@ -33,12 +38,15 @@ const App = () => {
 
     const onLogout = async () => {
         try {
-            const response = await axios.post("/auth/jwt/logout", {
-                withCredentials: true,
+            const response = await axios.post("/auth/jwt/logout", null, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
             });
 
             console.log("User is logged OUT", response);
             setUser(null); 
+            setAccessToken(null);
         } catch (err: any){
             console.error("Error while logout", err.response?.data || err.message);
             alert("Error while logout: " + (err.response?.data || "unknown error"));
@@ -46,41 +54,30 @@ const App = () => {
     }
     
     useEffect (() => {
-        const fetchUser = async () => {
-            try {
-                const response = await axios.get(`/users/me`, {
-                    withCredentials: true,
-                })
-                setUser(response.data);
-                console.log(response.data);
-            } catch (err: any){
-                console.log("Unauthorized or error:", err);
-            }
-        }
         fetchUser();
     }, []);
 
     return (
         <Router>
         <div className={!(isModalRegistrationOpen || isModalLoginOpen) ? "" : s.wrapperBlured}>
-          <Header openLoggining={openLoggining} openRegistration={openRegistration} onLogout={onLogout} userData={user}/>
+          <Header openLoggining={openLoggining} openRegistration={openRegistration} onLogout={onLogout}/>
           <div className={s.mainPart}>
             <SideBar />
             <div className={s.content}>
               <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/MainPage" element={<MainPage />} />
-                <Route path="/Games" element={<Games userData={user} openLoggining={openLoggining}/>} />
+                <Route path="/Games" element={<Games openLoggining={openLoggining}/>} />
                 <Route path="/Bonuses" element={<Bonuses />} />
                 <Route path="/Chat" element={<Chat />} />
                 <Route path="/FAQ" element={<FAQ />} />
 
-                <Route path="/profile" element={<UserProfile userData={user}/>}/>
-                <Route path="/deposite" element={<Deposite/>}/>
+                <Route path="/profile" element={<UserProfile/>}/>
+                <Route path="/deposite" element={<Deposit/>}/>
                 <Route path="/settings" element={<Settings/>}/>
                 <Route path="/refferalProgram" element={<RefferalProgram/>}/>
 
-                <Route path="/FortuneWheel" element={<FortuneWheel userData={user}/>} />
+                <Route path="/FortuneWheel" element={<FortuneWheel/>} />
               </Routes>
             </div>
           </div>
