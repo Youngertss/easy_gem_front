@@ -1,3 +1,8 @@
+# About repo
+
+Fron-end for site easy_gem (https://github.com/Youngertss/easy_gem).
+Now 2 games are available: SafeHack and FortuneWheel. Zustand is used to contain user info and upgrade it at all pages.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
