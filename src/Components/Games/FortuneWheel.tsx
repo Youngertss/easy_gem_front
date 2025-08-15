@@ -56,7 +56,6 @@ export const FortuneWheel = () => {
     const spinWheel = async () => {
         if (!abilityRotation) return;
         setAbilityRotation(false);
-        setAngle(sectorAngle/2);
 
         let response;
         try {
@@ -97,7 +96,7 @@ export const FortuneWheel = () => {
     const animateRotation = (targetRotation: number, income: number) => {
         const start = performance.now();
         const duration = 6000;
-        const initialAngle = angle;
+        const initialAngle = sectorAngle / 2;
 
         const animate = (time: number) => {
             const elapsed = time - start; //how much time is passed
@@ -128,7 +127,7 @@ export const FortuneWheel = () => {
 
 
     return (
-        <div className={s.gameLayer}>
+        <div className={s.pageLayer}>
             <div className={s.wheelBlock}>
                 <FortuneWheelCanvas labels={labels} sectorAngle={sectorAngle} angle={angle} spinWheelTest={spinWheelTest}/>
             </div>

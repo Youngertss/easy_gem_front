@@ -9,6 +9,7 @@ import { SideBar } from "./Components/SideBar/SideBar";
 import { MainPage } from "./Components/MainPage/MainPage";
 import { Games } from "./Components/Games/Games";
 import { FortuneWheel } from "./Components/Games/FortuneWheel";
+import { SafeHack } from "./Components/Games/SafeHack";
 
 import { Bonuses } from "./Components/Bonuses/Bonuses";
 import { Chat } from "./Components/Chat/Chat";
@@ -64,7 +65,7 @@ const App = () => {
             <div className={s.content}>
               <Routes>
                 <Route path="/" element={<MainPage />} />
-                <Route path="/MainPage" element={<MainPage />} />
+                <Route path="/MainPage" element={<Games openLoggining={openLoggining}/>} />
                 <Route path="/Games" element={<Games openLoggining={openLoggining}/>} />
                 <Route path="/Bonuses" element={<Bonuses />} />
                 <Route path="/Chat" element={<Chat />} />
@@ -76,6 +77,7 @@ const App = () => {
                 <Route path="/refferalProgram" element={<RefferalProgram/>}/>
 
                 <Route path="/FortuneWheel" element={<FortuneWheel/>} />
+                <Route path="/SafeHack" element={<SafeHack/>} />
               </Routes>
             </div>
           </div>

@@ -6,6 +6,7 @@ import SweetBananas from "../../imgs/gamesPictures/SweetBananas.png";
 import sss from "../../imgs/gamesPictures/sss.png";
 import CherryBoom from "../../imgs/gamesPictures/CherryBoom.png";
 import FortuneWheelPic from "../../imgs/gamesPictures/FortuneWheelPic.jpg";
+import SafeHack from "../../imgs/gamesPictures/safehack.png";
 
 import { useUserStore } from "../../store/userStore";
 
@@ -33,7 +34,7 @@ export const Games: React.FC<Props> = ({ openLoggining}) => {
                 <p className={s.categoryHeader}>The Most Popular</p>
                 <div className={s.categoryGames}>
                     <img src={FortuneWheelPic} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheel")}/>
-                    <img src={SweetBananas} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheelPic")}/>
+                    <img src={SafeHack} className={s.gamePicture} onClick={() => handleGameClick("/SafeHack")}/>
                     <img src={sss} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheelPic")}/>
                 </div>
             </div>

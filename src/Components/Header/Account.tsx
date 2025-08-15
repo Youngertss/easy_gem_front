@@ -35,7 +35,7 @@ export const Account: React.FC<AccountProps> = ({openLoggining, openRegistration
         return(
             <div className={s.entrance}>
                 <button onClick={openLoggining}>Войти</button>
-                <button onClick={openRegistration}>Регестрация</button>
+                <button onClick={openRegistration}>Регистрация</button>
             </div>
         )
     }

@@ -1,11 +1,17 @@
-.gameLayer{
+.pageLayer{
     width: 100%;
     height: auto;
 
     display: flex;
     flex-direction: row;
     // align-content: center;
-    // justify-content: center;
+    // justify-content: calc(center-50px);
+}
+
+.gameLayer{
+    margin-left: 20%;
+    display: flex;
+    flex-direction: row;
 }
 
 .wheelBlock{
@@ -98,4 +104,160 @@
     color:rgba(255, 227, 15, 0.89);
     font-family: fantasy;
     font-size: 55px;
+}
+
+// below this place wll be safe css's
+
+.visualField{
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    margin-top: 30px;
+}
+
+.wirefulSafe{
+    width: 80%;
+    height: auto;
+    margin-right: 45px;
+}
+
+.chanceBar{
+    width: 100%;
+    height: 40px;
+    border: solid 3px rgb(27, 27, 27);
+    display: flex;
+    flex-direction: row;
+    position:relative;
+    // align-items: center;
+}
+
+.hackButton{
+    height: 40px;
+    width: 170px;
+    background-color:white;
+    border: solid 1px black;
+    color: black;
+    font-size: 18px;
+    margin-top: 25px;
+}
+
+.hackButton:hover{
+    background-color:rgb(194, 194, 194);
+}
+
+.hackButton:active{
+    background-color:rgb(216, 216, 216);
+}
+
+.redField{
+    width: 45%;
+    background-color: red;
+    border-left: solid 1px rgb(39, 48, 163);
+}
+
+.greenField{
+    width: 55%;
+    border-right: solid 1px rgb(39, 48, 163);
+    background-color: rgb(0, 220, 0);
+}
+
+.bankArrow{
+    width: 5px;
+    height: 45px;
+    margin-top: -5px;
+    background-color:rgb(0, 0, 0);
+    border: solid 1px rgb(224, 138, 255);
+    border-radius:40%;
+    
+    position: absolute;
+    transition: left 0.5s ease;
+}
+
+.statusField{
+    font-size:22px;
+    display: flex;
+    flex-direction: column;
+    margin-left: -20px;
+    min-width: 215px;
+}
+
+.sumBet{
+    background: none;
+    color: aliceblue;
+    font-size:21px;
+    margin-bottom:10px;
+    border: none;
+    width: 100px;
+};
+
+.sumBet:focus-visible{
+    outline: none;
+    border: none;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.sliderTrack{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.betChance{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 40px;
+    margin-top: 15px;
+    background-color: rgba(0, 0, 0, 0.214);
+
+    button{
+        color:rgb(250, 120, 247);
+        background-color: rgba(0, 0, 0, 0);
+        border: none;
+    };
+
+    button:hover{
+        color:rgb(195, 94, 193);
+    }
+}
+
+
+.chanceRegulator{
+    width: 100%;
+    margin-top: 10px;
+    height: 5px;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+}
+
+
+.slider{
+    margin-top: 5px;
+    width: 90%;
+    position: relative;
+    -webkit-appearance: none;
+    background: transparent;
+    z-index: 2;
+    // height: 5px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 15px;
+    width: 15px;
+    background: rgb(0, 0, 0);
+    border: solid 1px aliceblue;
+    border-radius: 30%;
+    cursor: pointer;
+    margin-top: -1px;
 }
