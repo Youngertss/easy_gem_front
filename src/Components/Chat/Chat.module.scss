@@ -1,0 +1,60 @@
+.chatBlock{
+    height: 500px;
+    width: 100%;
+    max-width: 240px;
+    margin-left: 0px;
+    margin-right: 0px;
+    background-color: rgba(0, 0, 0, 0.251);
+    margin-top: -10px;
+    border-radius: 0px 0px 20px 20px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-shadow: 0 20px 60px rgba(111, 2, 123, 0.25);
+
+    a {
+        margin-right: 3px;
+        color: rgb(170, 5, 195);
+        font-size: 15px;
+    }
+
+    span {
+        color: rgb(170, 5, 195);
+        font-size: 15px;
+    }
+};
+
+.message {
+    width: 95%;
+    margin: 5px 10px 5px 10px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+}
+
+.sendMessageBlock{
+    width: 100%;
+    height: 40px;
+    background-color: rgb(31, 18, 62);
+    display: flex;
+    // align-items: center;
+    // justify-content: center;
+    border: 0.5px 0px 0.5px 0px;
+    border-radius: 30px;
+    border-style: solid;
+    border-color: rgb(64, 27, 93);
+
+    input{
+        height: 100%;
+        color: rgb(134, 4, 154);
+        font-size: 17px;
+        background-color: rgba(0, 0, 0, 0);
+        border: none;
+        margin-left: 10px;
+    };
+
+    input:focus{
+        outline: none;
+    }
+}

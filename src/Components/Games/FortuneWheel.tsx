@@ -37,7 +37,7 @@ export const FortuneWheel = () => {
         const getGameData = async () => { 
             const gameDataCurr = await axios.get("games/get_game", {
                 params: {
-                    id: 3
+                    id: 1
                 },
                 headers: {
                     "Content-Type": "application/json",

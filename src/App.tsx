@@ -68,7 +68,6 @@ const App = () => {
                 <Route path="/MainPage" element={<Games openLoggining={openLoggining}/>} />
                 <Route path="/Games" element={<Games openLoggining={openLoggining}/>} />
                 <Route path="/Bonuses" element={<Bonuses />} />
-                <Route path="/Chat" element={<Chat />} />
                 <Route path="/FAQ" element={<FAQ />} />
 
                 <Route path="/profile" element={<UserProfile/>}/>
@@ -80,6 +79,7 @@ const App = () => {
                 <Route path="/SafeHack" element={<SafeHack/>} />
               </Routes>
             </div>
+            <Chat />
           </div>
         </div>
             {isModalLoginOpen && (
