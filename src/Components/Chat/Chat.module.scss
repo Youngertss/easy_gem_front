@@ -1,4 +1,9 @@
-.chatBlock{
+.chatLayer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    
     position: sticky;
     top: 0;
     z-index: 100;
@@ -10,19 +15,36 @@
     background-color: rgba(0, 0, 0, 0.251);
     margin-top: -10px;
     border-radius: 0px 0px 20px 20px;
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: flex-start;
-    align-items: flex-start;
+    color: rgb(170, 5, 195);
+    font-size: 15px;
     box-shadow: 0 20px 60px rgba(111, 2, 123, 0.25);
+}
+
+.chatBlock{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    color: rgb(170, 5, 195);
+    font-size: 15px;
+    overflow-x:hidden;
 
     a {
-        margin-right: 3px;
         color: rgb(170, 5, 195);
         font-size: 15px;
     }
 
+    u {
+        text-decoration: underline;
+        text-decoration-color: rgb(170, 5, 195);
+        text-decoration-thickness: 1px;
+        /* толщина */
+        text-decoration-style: solid;
+    }
+
     span {
+        margin-left: 3px;
         color: rgb(170, 5, 195);
         font-size: 15px;
     }
