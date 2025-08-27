@@ -34,6 +34,7 @@ export const useUserStore = create<UserState>()(
                     });
                     set({ user: res.data });
                 } catch (e){
+                    set({ user: null });
                     console.log(e);
                 }
             }
