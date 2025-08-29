@@ -70,7 +70,7 @@ const App = () => {
                 <Route path="/Bonuses" element={<Bonuses />} />
                 <Route path="/FAQ" element={<FAQ />} />
 
-                <Route path="/profile" element={<UserProfile/>}/>
+                <Route path="/profile/:profileUsername" element={<UserProfile/>}/>
                 <Route path="/deposite" element={<Deposit/>}/>
                 <Route path="/settings" element={<Settings/>}/>
                 <Route path="/refferalProgram" element={<RefferalProgram/>}/>

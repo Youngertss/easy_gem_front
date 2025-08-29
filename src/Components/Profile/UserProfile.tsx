@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useParams } from "react-router-dom"
 import s from "./Profile.module.scss";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
@@ -6,6 +7,17 @@ import {useNavigate} from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 import {SelectionHeader} from "./SelectionHeader"
 
+interface UserData {
+    id: number;
+    email: string;
+    username: string;
+    balance: number;
+    photo: string;
+    favorite_game_id: number;
+    total_withdrawn: number;
+    total_withdrawals: number;
+    created_at: string;
+}
 
 export const UserProfile = () =>{
     const userData = useUserStore((set) => set.user)
@@ -17,22 +29,50 @@ export const UserProfile = () =>{
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [avatarPreview, setAvatarPreview] = useState("");
 
+    const { profileUsername } = useParams();
+    const [ profileUser, setProfileUser] = useState<UserData | null>();
+
+    //here we install whose profile we are going to render
     useEffect(() => {
-        if (!userData) {
-            console.log("UserProfile.tsx -log");
-            return;
+        if (!profileUsername) return;
+
+        if (profileUsername === userData?.username && userData) {
+            setProfileUser(userData);
+        } else {
+            const fetchProfile = async () => {
+                try {
+                    const response = await axios.get<UserData>(
+                        "/users/get_user_by_name/" + profileUsername,
+                        { withCredentials: true }
+                    );
+                    if (!response.data) {
+                        navigate("/"); 
+                        return;
+                    }
+                    setProfileUser(response.data);
+                } catch (e) {
+                    console.log("Error while getting " + profileUsername + " profile:", e);
+                    navigate("/");
+                }
+            };
+            fetchProfile();
         }
-        setAvatarPreview(userData?.photo);
-        // console.log(userData?.photo);
+    }, [profileUsername, userData, navigate]);
+
+    //additional info about already known user to render
+    useEffect(() => {
+        if (!profileUser) return;
+
+        setAvatarPreview(profileUser.photo);
 
         const fetchFavGame = async () => {
-            if (!userData.favorite_game_id) {
+            if (!profileUser.favorite_game_id) {
                 setFavGame("-");
                 return;
             }
 
             try {
-                const response = await axios.get(`/games/get_game/${userData.favorite_game_id}`, {
+                const response = await axios.get(`/games/get_game/${profileUser.favorite_game_id}`, {
                     withCredentials: true,
                 });
                 setFavGame(response.data.name);
@@ -42,19 +82,17 @@ export const UserProfile = () =>{
         };
 
         fetchFavGame();
-    }, [userData]);
+    }, [profileUser]); 
 
-    if (!userData){
-        navigate("/");
-        return(<p></p>)
-    }
 
-    const hadndleAvatarClick =  () => {
+    const hadndleAvatarClick = () => {
+        if (!userData || userData.username !== profileUsername) return;
         fileInputRef.current?.click();
-        
     }
 
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) =>{
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!userData || userData.username !== profileUsername) return;
+
         const file = e.target.files?.[0];
         if (!file) return;
 
@@ -96,16 +134,16 @@ export const UserProfile = () =>{
                     <div style={{display: "flexbox", flexDirection: "column"}}>
                         <div className={s.personalInfo}>
                             <span style={{fontSize: "22px"}}>
-                                <span style={{marginRight: "10px"}}>{userData.username}</span>
-                                <span style={{fontSize: "18px"}}>{userData.balance}$</span>
+                                <span style={{marginRight: "10px"}}>{profileUser?.username}</span>
+                                <span style={{fontSize: "18px"}}>{profileUser?.balance}$</span>
                             </span>
                         </div>
-                        <div className={s.registerDate}> <span>{"registered since: "+ userData.created_at.slice(0,10)}</span></div>
+                        <div className={s.registerDate}> <span>{"registered since: "+ profileUser?.created_at.slice(0,10)}</span></div>
                     </div>
                 </div>
                 <div className = {s.userStats}>
-                    <p>Withdrawals sum: {userData.total_withdrawn}</p>
-                    <p>Count of withdrawals: {userData.total_withdrawals}</p>
+                    <p>Withdrawals sum: {profileUser?.total_withdrawn}</p>
+                    <p>Count of withdrawals: {profileUser?.total_withdrawals}</p>
                     <p style={{paddingTop: "10px"}}>{"Favorute game: "+ favGame}</p>
                 </div>
             </div>

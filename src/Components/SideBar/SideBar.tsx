@@ -12,21 +12,23 @@ export const SideBar = () => {
     }, [location.pathname]);
     
     return (
-        <div className={s.sidebar}>
-            <ul className={s.pages}>
-                {pages.map((e) => {
-                    return (
-                        <li
-                            key={e}
-                            className={`${s.page} ${
-                                e === current_page ? s.activePage : ""
-                            }`}
-                        >
-                            <NavLink to={`/${e}`}>{e}</NavLink>
-                        </li>
-                    );
-                })}
-            </ul>
+        <div className={s.sidebarLayer}>
+            <div className={s.sidebar}>
+                <ul className={s.pages}>
+                    {pages.map((e) => {
+                        return (
+                            <li
+                                key={e}
+                                className={`${s.page} ${
+                                    e === current_page ? s.activePage : ""
+                                }`}
+                            >
+                                <NavLink to={`/${e}`}>{e}</NavLink>
+                            </li>
+                        );
+                    })}
+                </ul>
+            </div>
         </div>
     );
 };

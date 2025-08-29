@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import s from "./Chat.module.scss"
 
 import { useUserStore } from '../../store/userStore';
-import { timeStamp } from 'console';
 
 type ChatMessage = { author: string; message: string; time_sent?: string };
 
@@ -34,7 +34,7 @@ export const Chat = () => {
                 console.log("Received WS message:", data);
                 if (data?.author && data?.message) {
                     setMessages((prev) => [...prev, data]);
-                } else if (data?.messages && data.messages.length !== 0) {
+                } else if (data?.messages && data.messages.length !== 0) { // initially loads history of last messages
                     let data_to_chat = data.messages.reverse()
                     setMessages((prev) => [...prev, ...data_to_chat])
                 };
@@ -47,7 +47,7 @@ export const Chat = () => {
         ws.onclose = () => console.log("WS closed");
 
         return () => ws.close(); // clean up
-    }, [user]);
+    }, [user?.username]);
 
     const sendMessageHandler = () => {
         if (!user) {
@@ -61,8 +61,9 @@ export const Chat = () => {
             if (!ws || ws.readyState !== WebSocket.OPEN || !text) return;
             
             const data = { "message": input.value, "author": user.username, "timestamp": new Date().toISOString() };
-            console.log("Data to send:", data);
+            // console.log("Data to send:", data);
             ws.send(JSON.stringify(data));
+
             input.value = "";
         }
     };
@@ -75,7 +76,7 @@ export const Chat = () => {
 
                 {messages.map((msg, index) => (
                     <div key={index} className={s.message}>
-                        <b><a className={s.messageAuthor}>{msg.author}:</a></b><span>{msg.message}</span>
+                        <b><NavLink className={s.authorName} to={`/profile/${msg.author}`}>{msg.author}</NavLink>:</b><span>{msg.message}</span>
                     </div>
                 ))}
             </div>
