@@ -124,7 +124,7 @@ export const UserProfile = () =>{
 
             <div className = {s.allInfo} >
                 <div className={s.userInfo}>
-                    <img className={s.userAvatar} src={"/imgs"+avatarPreview} onClick={hadndleAvatarClick}/>
+                    <img className={s.userAvatar} src={"/imgs/users_avatars/"+avatarPreview} onClick={hadndleAvatarClick}/>
                     <input
                         type="file"
                         ref={fileInputRef}

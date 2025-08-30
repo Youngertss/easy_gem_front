@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import s from "./Chat.module.scss"
 
@@ -6,11 +6,14 @@ import { useUserStore } from '../../store/userStore';
 
 type ChatMessage = { author: string; message: string; time_sent?: string };
 
-export const Chat = () => {
+interface ChatParams{
+    openLoggining: () => void;
+}
+
+export const Chat: React.FC<ChatParams> = ({ openLoggining }) => {
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const messageInput = useRef(null)
     const user = useUserStore((state) => state.user)
-    const fetchUser = useUserStore((state) => state.fetchUser)
     const wsRef = useRef<WebSocket | null>(null);
 
     useEffect(() => {
@@ -51,7 +54,7 @@ export const Chat = () => {
 
     const sendMessageHandler = () => {
         if (!user) {
-            alert("First sign up to use the chat");
+            openLoggining();
             return;
         }
         if (messageInput.current) {

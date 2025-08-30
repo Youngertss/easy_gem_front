@@ -18,7 +18,7 @@ export const Account: React.FC<AccountProps> = ({openLoggining, openRegistration
     if (userData){
         return (
             <div className={s.userIn}>
-                <img className={s.userAvatar} src={"/imgs"+userData.photo}/>
+                <img className={s.userAvatar} src={"/imgs/users_avatars/"+userData.photo}/>
                 <div className={s.dropdownBlock}
                     onMouseEnter={() => setShowDropdown(true)}
                     onMouseLeave={() => setShowDropdown(false)}

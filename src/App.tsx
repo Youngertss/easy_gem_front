@@ -79,7 +79,7 @@ const App = () => {
                 <Route path="/SafeHack" element={<SafeHack/>} />
               </Routes>
             </div>
-            <Chat />
+            <Chat openLoggining={openLoggining} />
           </div>
         </div>
             {isModalLoginOpen && (
