@@ -118,8 +118,9 @@ export const UserProfile = () =>{
 
     return(
         <div className={s.profileBlock}>
-            <SelectionHeader selected={"Profile"}/>
-            <hr/>
+            
+            {userData?.username === profileUsername ? <SelectionHeader selected={"Profile"}  /> : null}
+            {userData?.username === profileUsername ? <hr /> : null}
 
             <div className = {s.allInfo} >
                 <div className={s.userInfo}>

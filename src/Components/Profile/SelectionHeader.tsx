@@ -1,6 +1,8 @@
 import s from "./Profile.module.scss";
 import {NavLink } from 'react-router-dom';
 
+import { useUserStore } from "../../store/userStore";
+
 interface Props {
     selected: string;
 }
@@ -8,12 +10,13 @@ interface Props {
 
 export const SelectionHeader: React.FC<Props> = ({ selected }) => {
     const buttons = ["Profile", "Deposite", "Settings"];
+    const user = useUserStore((set) => (set.user))
 
     return (
         <div className={s.selectHeader}>
             {buttons.map((btn) => (
                 <NavLink
-                    to = {"/"+btn.toLowerCase()}
+                    to = { btn === "Profile" ? "/"+btn.toLowerCase()+"/"+user?.username : "/"+btn.toLowerCase()}
                     key={btn.toLowerCase()}
                     className={selected.toLowerCase() === btn.toLowerCase() ? s.selectedInfoPage : ""}
                 >
