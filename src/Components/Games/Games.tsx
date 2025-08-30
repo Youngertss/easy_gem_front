@@ -2,11 +2,6 @@ import React from 'react';
 import { useNavigate  } from 'react-router-dom';
 
 import s from "./GamesMenu.module.scss"
-import SweetBananas from "../../imgs/gamesPictures/SweetBananas.png";
-import sss from "../../imgs/gamesPictures/sss.png";
-import CherryBoom from "../../imgs/gamesPictures/CherryBoom.png";
-import FortuneWheelPic from "../../imgs/gamesPictures/FortuneWheelPic.jpg";
-import SafeHack from "../../imgs/gamesPictures/safehack.png";
 
 import { useUserStore } from "../../store/userStore";
 
@@ -33,24 +28,24 @@ export const Games: React.FC<Props> = ({ openLoggining}) => {
             <div className={s.categoryBlock}>
                 <p className={s.categoryHeader}>The Most Popular</p>
                 <div className={s.categoryGames}>
-                    <img src={FortuneWheelPic} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheel")}/>
-                    <img src={SafeHack} className={s.gamePicture} onClick={() => handleGameClick("/SafeHack")}/>
-                    <img src={sss} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheelPic")}/>
+                    <img src={"imgs/games/FortuneWheelPic.jpg"} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheel")}/>
+                    <img src={"imgs/games/safehack.png"} className={s.gamePicture} onClick={() => handleGameClick("/SafeHack")}/>
+                    <img src={"imgs/games/sss.png"} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheelPic")}/>
                 </div>
             </div>
 
             <div className={s.categoryBlock}>
                 <p className={s.categoryHeader}>Fruits</p>
                 <div className={s.categoryGames}>
-                    <img src={SweetBananas} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheelPic")}/>
-                    <img src={CherryBoom} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheelPic")}/>
+                    <img src={"imgs/games/SweetBananas.png"} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheelPic")}/>
+                    <img src={"imgs/games/CherryBoom.png"} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheelPic")}/>
                 </div>
             </div>
 
             <div className={s.categoryBlock}>
                 <p className={s.categoryHeader}>Standard Games</p>
                 <div className={s.categoryGames}>
-                    <img src={sss} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheelPic")}/>
+                    <img src={"imgs/games/sss.png"} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheelPic")}/>
                 </div>
             </div>
         </div>

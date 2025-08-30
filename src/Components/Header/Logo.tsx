@@ -1,4 +1,3 @@
-import casinoLogo from "../../imgs/headerImg/easyGemLogo.svg";
 import s from "./Header.module.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -16,6 +15,6 @@ export const Logo = () => {
     };
 
     return (
-        <img src={casinoLogo} alt="logo" className={s.headerLogo} onClick={handleLogoClick}/>
+        <img src={"imgs/logo/easyGemLogo.svg"} alt="logo" className={s.headerLogo} onClick={handleLogoClick}/>
     )
 }; 
