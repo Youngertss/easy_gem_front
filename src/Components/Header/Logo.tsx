@@ -15,6 +15,6 @@ export const Logo = () => {
     };
 
     return (
-        <img src={"imgs/logo/easyGemLogo.svg"} alt="logo" className={s.headerLogo} onClick={handleLogoClick}/>
+        <img src={"/imgs/logo/easyGemLogo.svg"} alt="logo" className={s.headerLogo} onClick={handleLogoClick}/>
     )
 }; 

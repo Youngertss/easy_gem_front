@@ -5,7 +5,8 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
 import { useUserStore } from "../../store/userStore";
-import {SelectionHeader} from "./SelectionHeader"
+import { SelectionHeader } from "./SelectionHeader";
+import { UserHistory } from "./UserHistory";
 
 interface UserData {
     id: number;
@@ -149,23 +150,7 @@ export const UserProfile = () =>{
                 </div>
             </div>
             
-            <div className = {s.userHistory}>
-                <div className={s.gameHistoryRow}>
-                    <p style={{marginBottom: "10px"}}>History</p>
-                    <div className = {s.gameHistoryInfo}>
-                        <div style={{width: "110px", height: "70px", backgroundColor: "yellow", marginRight: "15px"}}></div>
-                        <p style={{marginRight: "5px", color: "yellow"}}>Sweety Banana</p>
-                        <p style={{color: "grey", marginLeft: "50px"}}>100$</p>
-                    </div>
-                </div>
-
-                <div className={s.gameIncomeRow}>
-                    <p style={{marginBottom: "10px"}}>Income</p>
-                    <div className = {s.incomeInfo}>
-                        <p style={{color: "lightgreen"}}>+10</p>
-                    </div>
-                </div>
-            </div>
+            {profileUser ? <UserHistory profileUser={profileUser}/> : null}
         </div>
     )
 };

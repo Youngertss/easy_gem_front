@@ -103,10 +103,15 @@ hr {
 
 .userHistory{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 98%;
     margin-top: 20px;
     // margin-right: 35px;
+}
+
+.historyItem{
+    display: flex;
+    flex-direction: row;
 }
 
 .historyHeader{
@@ -128,6 +133,7 @@ hr {
     flex-direction: column;
     align-items:center;
 
+    // padding-bottom: 20px;
 }
 
 .gameIncomeRow{
@@ -145,30 +151,39 @@ hr {
 .gameHistoryInfo {
     color: aliceblue;
     width: 100%;
-    height: 80px;
+    height: 120px;
     border-style: solid;
     border-color: aliceblue;
-    // border-bottom-width: 1px;
-    // border-right-width: 1px;
     border-width: 0px 1px 1px 0px;
-    
-
     display: flex;
-    // justify-content: center;
     align-items: center;
+    // justify-content: center;
 
+    a {
+        color:rgba(207, 8, 238, 1);
+        font-size:19px;
+        margin-right: 18%;
+        text-decoration: none;
+    };
+    a:hover{
+        color: rgb(217, 107, 234);
+    };
 }
 
-.gameHistoryInfo:last-of-type{
-    color:aquamarine;
-    align-self: center;
+.profileGamePic{
+    width: 110px;
+    height: 80px;
+    flex-shrink: 0;
+    object-fit: cover;
+    margin-right: 15px;
+    background-color: aquamarine;
+    box-shadow: 5px 5px 20px rgb(24, 9, 56);
 }
-
 
 .incomeInfo {
     color: aliceblue;
     width: 100%;
-    height: 80px;
+    height: 120px;
     border-bottom-style: solid;
     border-bottom-color: aliceblue;
     border-bottom-width: 1px;
