@@ -72,7 +72,9 @@ export const UserHistory: React.FC<UserHistoryProps> = ({ profileUser }) => {
                     <div className={s.gameHistoryRow}>
                         <div className = {s.gameHistoryInfo}>
                             <img src={"/imgs/games"+item.game.photo} className={s.profileGamePic}/>
-                            <NavLink to={"/"+item.game.name}>{item.game.name}</NavLink>
+                            <div style={{"minWidth": "150px", "marginRight": "5%"}}>
+                                <NavLink to={"/" + item.game.name}>{item.game.name}</NavLink>
+                            </div>
                             <p style={{color: "rgba(28, 154, 221, 1)"}}>{item.bet}$</p>
                         </div>
                     </div>
