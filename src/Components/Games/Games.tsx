@@ -29,8 +29,9 @@ export const Games: React.FC<Props> = ({ openLoggining}) => {
                 <p className={s.categoryHeader}>The Most Popular</p>
                 <div className={s.categoryGames}>
                     <img src={"/imgs/games/FortuneWheelPic.jpg"} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheel")}/>
-                    <img src={"/imgs/games/safehack.png"} className={s.gamePicture} onClick={() => handleGameClick("/SafeHack")}/>
-                    <img src={"/imgs/games/sss.png"} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheelPic")}/>
+                    <img src={"/imgs/games/safehack.png"} className={s.gamePicture} onClick={() => handleGameClick("/SafeHack")} />
+                    <img src={"/imgs/games/MinerPic.png"} className={s.gamePicture} onClick={() => handleGameClick("/Miner")} />
+                    <img src={"/imgs/games/SweetBananas.png"} className={s.gamePicture} onClick={() => handleGameClick("/FortuneWheelPic")}/>
                 </div>
             </div>
 

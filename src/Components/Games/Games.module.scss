@@ -266,3 +266,45 @@ input[type="number"]::-webkit-inner-spin-button {
     cursor: pointer;
     margin-top: -1px;
 }
+
+//Miner
+
+.minerGameLayer{
+    margin-left: 15%;
+    display: flex;
+    flex-direction: row;
+}
+
+.minerPlayBlock{
+    display: flex;
+    flex-direction: column;
+}
+
+.mineBlock{
+    height: 400px;
+    width: 500px;
+    border: solid 1px black;
+}
+
+.mineField{
+    margin: 10px    ;
+}
+
+.buttonStartBlock{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    button{
+        margin-top: 10px;
+        width: 100px;
+        height: 30px;
+        color:rgb(248, 250, 135);
+        background-color: rgb(65, 34, 34);
+    }
+}
+
+.minerSettingsBlock{
+    margin-left:50px;
+    width: 150px;
+}

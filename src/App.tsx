@@ -10,6 +10,7 @@ import { MainPage } from "./Components/MainPage/MainPage";
 import { Games } from "./Components/Games/Games";
 import { FortuneWheel } from "./Components/Games/FortuneWheel";
 import { SafeHack } from "./Components/Games/SafeHack";
+import { Miner } from "./Components/Games/Miner";
 
 import { Bonuses } from "./Components/Bonuses/Bonuses";
 import { Chat } from "./Components/Chat/Chat";
@@ -77,6 +78,7 @@ const App = () => {
 
                 <Route path="/FortuneWheel" element={<FortuneWheel/>} />
                 <Route path="/SafeHack" element={<SafeHack/>} />
+                <Route path="/Miner" element={<Miner/>} />
               </Routes>
             </div>
             <Chat openLoggining={openLoggining} />
