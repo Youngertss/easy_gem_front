@@ -270,7 +270,7 @@ input[type="number"]::-webkit-inner-spin-button {
 //Miner
 
 .minerGameLayer{
-    margin-left: 15%;
+    margin-left: 5%;
     display: flex;
     flex-direction: row;
 }
@@ -278,33 +278,257 @@ input[type="number"]::-webkit-inner-spin-button {
 .minerPlayBlock{
     display: flex;
     flex-direction: column;
+    width: 650px;
 }
 
 .mineBlock{
     height: 400px;
-    width: 500px;
-    border: solid 1px black;
+    padding: 10px;
+    border-radius: 30px;
+    background-color: #000429;
+    width: 650px;
+    display: flex;
+    flex-direction: row;
 }
 
 .mineField{
-    margin: 10px    ;
+    margin: 10px;
+    width: 400px;
 }
 
-.buttonStartBlock{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.minerGameStatusInfo{
+    border-left: solid 1px black;
+}
 
-    button{
-        margin-top: 10px;
-        width: 100px;
-        height: 30px;
-        color:rgb(248, 250, 135);
-        background-color: rgb(65, 34, 34);
+.coefficientsInfo{
+    display: flex;
+    flex-direction: row;
+    // align-items: center;
+    margin-left: 15px;
+    width: calc(100% - 15px);
+    overflow-x: auto;
+    white-space: nowrap;
+    div{
+        margin-right: 10px;
     }
 }
 
 .minerSettingsBlock{
-    margin-left:50px;
-    width: 150px;
+    margin-left:20px;
+    width: 260px;
+    height: fit-content;
+    background-color: #252e83;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.settingsHeader{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.balanseBlock{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(1, 161, 108);
+    border-radius: 10px;
+    width: 80%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 8px;
+    padding-bottom: 5px;
+
+    p{
+        font-size: 20px;
+    }
+}
+
+.balanseSum{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    p{
+        color:rgb(0, 0, 0);
+    }
+}
+
+.dollarBlock{
+    margin-left: -45px;
+    margin-right: 10px;
+    img{
+        width: 35px;
+        height: auto;
+    }
+}
+
+.bombsSelectBlock {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: fit-content;
+    margin-bottom: 5px;
+}
+
+.bombsSelection{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    .bombsCountInfo{
+        width:60px;
+        height: 30px;
+        background-color: #161b48;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        p{
+            color:rgb(184, 184, 184);
+        }
+        p:hover {
+            cursor: default;
+        }
+    
+    }
+
+    img{
+        width: 20px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .bombsCount{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 28px;
+        background-color: #3c47a8;
+        border: solid 2px #414db4;
+        border-radius: 5px;
+        font-size: 15px;
+        color: rgb(208, 208, 208);
+    }
+    p {
+        cursor: default;
+    }
+    p:hover {
+        cursor:default;
+    }
+
+    .bombsCount:hover{
+        background-color: rgb(233, 55, 55);
+        border: solid 2px rgb(233, 55, 55);
+        font-size: 16px;
+        color:aliceblue;
+    }
+
+    .selected{
+        background-color: rgb(233, 55, 55);
+        border: solid 2px rgb(233, 55, 55);
+        font-size: 16px;
+        color: aliceblue;
+    }
+
+}
+
+.betSumBlock {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+.betSelection{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    .betSumInfo {     
+        width: 60px;
+        height: 30px;
+        border-radius: 10px;
+        background-color: #161b48;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: end;
+        input{
+            outline: none;
+            border-width: 0px;
+            width: 40px;
+            height: 20px;
+            color:azure;
+            background-color: #161b48;
+            margin-right: 5px;
+            font-size:15px;
+            margin-left: 2px;
+        }
+    };
+
+    .betSum{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 28px;
+        background-color: #3c47a8;
+        border: solid 2px #414db4;
+        border-radius: 5px;
+        font-size: 15px;
+        color: rgb(208, 208, 208);
+
+        
+        p {
+            cursor: default;
+        }
+        p:hover {
+            cursor: default;
+        }
+    };
+    .betSum:hover{
+        background-color: #3e4edb;
+        border-color: #3e4edb;
+        font-size: 16px;
+        color: aliceblue;
+    }
+
+    .selected{
+        background-color: #3e4edb;
+        border-color: #3e4edb;
+        font-size: 16px;
+        color: aliceblue;
+    }
+
+    .selected:hover {
+        background-color: #3e4edb
+    }
+}
+
+.buttonPlayBlock{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 90%;
+    button{
+        width: 100%;
+        height: 30px;
+        border-radius: 10px;
+        background-color: #8c93d7;
+    }
 }
