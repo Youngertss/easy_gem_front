@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { MineField } from "./MineField"
+import { MinerSettings } from "./MinerSettings"
 
 import s from "./Miner.module.scss";
 import { useUserStore } from "../../store/userStore";
@@ -7,11 +8,39 @@ import { useUserStore } from "../../store/userStore";
 
 export const Miner = () => {
     const user = useUserStore((set) => (set.user));
+    //game settings
     const [gameStarted, setGameStarted] = useState(false);
+    const [bombsCount, setBombsCount] = useState<number>(3);
+    const [currBet, setCurrBet] = useState<number>(5);
     // scroll states
     const scrollRef = useRef<HTMLDivElement>(null);
     const [showLeft, setShowLeft] = useState(false);
     const [showRight, setShowRight] = useState(false);
+
+    const startGameHandle = () => {
+        if (gameStarted) return;
+        setGameStarted(true);
+    };
+
+    const endGameHandle = () => {
+        if (!gameStarted) return;
+        setGameStarted(false);
+    };
+
+    const selectCountBombs = (count: number) => {
+        setBombsCount(count);
+    }
+
+    const selectCurrBet = (bet: number, inputBetRef: HTMLInputElement | null) => {
+        if (!user || !inputBetRef) return;
+
+        let newBet = bet;
+        if (bet < 5) newBet = 5;
+        else if (user.balance < bet) newBet = user.balance;
+
+        inputBetRef.value = `${newBet}`;
+        setCurrBet(newBet);
+        };
 
     const checkScroll = () => {
         const el = scrollRef.current;
@@ -50,7 +79,7 @@ export const Miner = () => {
                                     <h4>Gold bars</h4>
                                     <p>Open the cells with gold to multiply coefficient</p>
                                     <div className={s.goldCount}>
-                                        <p>22</p>
+                                        <p>{25-bombsCount}</p>
                                     </div>
                                     <img src={"/imgs/icons/goldBarsStack.svg"} />
                                     <div className={s.glowBlock}></div>
@@ -61,7 +90,7 @@ export const Miner = () => {
                                     <h4>Bombs</h4>
                                     <p>Count of bombs on the field</p>
                                     <div className={s.bCount}>
-                                        <p>3</p>
+                                        <p>{bombsCount}</p>
                                     </div>
                                     <img src={"/imgs/icons/tnt.svg"} />
                                     <div className={s.glowBlock}></div>
@@ -102,57 +131,12 @@ export const Miner = () => {
                         )}
                     </div>
                 </div>
-                <div className={s.minerSettingsBlock}>
-                    <div className={s.settingsHeader}><h3>Settings</h3></div>
-                    <div className={s.balanseBlock}>
-                        <div className={s.dollarBlock}>
-                            <img src="/imgs/icons/wallet.svg" alt="" />
-                        </div>
-                        <div className={s.balanseSum}>
-                            <p>{user?.balance}$</p>
-                            <p style={{ "fontSize": "14px"   }}>Balance</p>
-                        </div>
-                    </div>
-                    <div className={s.bombsSelectBlock}>
-                        <p>Count of bombs</p>
-                        <div className={s.bombsSelection}>
-                            <div className={s.bombsCountInfo}>
-                                <img src={"/imgs/icons/bomb.svg"}/>
-                                <p>3</p>
-                            </div>
-                            <div className={`${s.bombsCount} ${s.selected}`}>
-                                <img src={"/imgs/icons/bomb.svg"} className={s.bombInSelected} />
-                                <p>3</p>
-                            </div>
-                            <div className={s.bombsCount}>
-                                <img src={"/imgs/icons/bomb.svg"} className={s.bombInSelected} />
-                                <p>5</p>
-                            </div>
-                            <div className={s.bombsCount}>
-                                <img src={"/imgs/icons/bomb.svg"} className={s.bombInSelected} />
-                                <p>10</p>
-                            </div>
-                            <div className={s.bombsCount}>
-                                <img src={"/imgs/icons/bomb.svg"} className={s.bombInSelected} />
-                                <p>20</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={s.betSumBlock}>
-                        <p>Bet sum</p>
-                        <div className={s.betSelection}>
-                            <div className={s.betSumInfo}>
-                                <p>$</p><input type="text" defaultValue="5"/>
-                            </div>
-                            <div className={`${s.betSum} ${s.selected}`}><p>$5</p></div>
-                            <div className={s.betSum}><p>$20</p></div>
-                            <div className={s.betSum}><p>$50</p></div>
-                        </div>
-                    </div>
-                    <div className={s.buttonPlayBlock}>
-                        <button>Play</button>
-                    </div>
-                </div>
+                <MinerSettings
+                    gameStarted={gameStarted} bombsCount={bombsCount}
+                    currBet={currBet} startGameHandle={startGameHandle}
+                    endGameHandle={endGameHandle} selectCountBombs={selectCountBombs}
+                    selectCurrBet={selectCurrBet}
+                />
             </div>
         </div>
     );
