@@ -31,28 +31,40 @@
     flex-direction: row;
 }
 
-.mineField {
+.mineFieldLayer{
     margin: 10px;
     width: 400px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-}
-
-.mineCell {
-    background-color: #ccc;
-    border: 1px solid #999;
-    aspect-ratio: 1/1; //square form
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
+}
+
+.mineField {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+}
+
+.mineCell {
+    width: 70px;
+    height: 68px;
+    background-color: #1e2456;
+    border-radius: 10px;
+    aspect-ratio: 1/1; //square form
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    img{
+        max-width: 40px;
+        max-height: 40px;
+    }
 }
 
 
 .minerGameStatusInfo{
-    border-left: solid 1px black;
     display: flex;
     flex-direction: column;
     align-items: center;
