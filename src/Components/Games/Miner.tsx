@@ -41,9 +41,18 @@ export const Miner = () => {
                         </div>
                     </div>
                     <div className={s.coefficientsInfo}>
-                        <div>1.2x</div><div>1.46x</div><div>1.2x</div><div>1.46x</div>
-                        <div>1.2x</div><div>1.46x</div><div>1.2x</div><div>1.46x</div>
-                        {/* <div>1.2x</div><div>1.46x</div><div>1.2x</div><div>1.46x</div> */}
+                        <div><p>x1.2</p><p className={s.stepNum}>1 step</p></div>
+                        <div><p>x1.46</p><p className={s.stepNum}>2 steps</p></div>
+                        <div><p>x1.2</p></div>
+                        <div><p>x1.46</p></div>
+                        <div><p>x1.2</p></div>
+                        <div><p>x1.46</p></div>
+                        <div><p>x1.2</p></div>
+                        <div><p>x1.46</p></div>
+                        <div><p>x1.2</p></div>
+                        <div><p>x1.46</p></div>
+                        <div><p>x1.2</p></div>
+                        <div><p>x1.46</p></div>
                     </div>
                 </div>
 
@@ -51,11 +60,11 @@ export const Miner = () => {
                     <div className={s.settingsHeader}><h3>Settings</h3></div>
                     <div className={s.balanseBlock}>
                         <div className={s.dollarBlock}>
-                            <img src="/imgs/games/dollar.png" alt="" />
+                            <img src="/imgs/icons/wallet.svg" alt="" />
                         </div>
                         <div className={s.balanseSum}>
                             <p>{user?.balance}$</p>
-                            <p style={{ "fontSize": "14px" }}>Balance</p>
+                            <p style={{ "fontSize": "14px"   }}>Balance</p>
                         </div>
                     </div>
                     <div className={s.bombsSelectBlock}>
