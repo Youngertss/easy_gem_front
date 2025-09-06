@@ -1,4 +1,4 @@
-import { useState, } from "react";
+import { useState, useRef, useEffect } from "react";
 import { MineField } from "./MineField"
 
 import s from "./Miner.module.scss";
@@ -8,6 +8,35 @@ import { useUserStore } from "../../store/userStore";
 export const Miner = () => {
     const user = useUserStore((set) => (set.user));
     const [gameStarted, setGameStarted] = useState(false);
+    // scroll states
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const [showLeft, setShowLeft] = useState(false);
+    const [showRight, setShowRight] = useState(false);
+
+    const checkScroll = () => {
+        const el = scrollRef.current;
+        if (!el) return;
+
+        const { scrollLeft, scrollWidth, clientWidth } = el;
+
+        setShowLeft(scrollLeft > 0);
+        setShowRight(scrollLeft + clientWidth < scrollWidth-5);
+    };
+
+    useEffect(() => {
+        checkScroll(); // проверить при монтировании
+        window.addEventListener("resize", checkScroll); // при изменении ширины окна
+        return () => window.removeEventListener("resize", checkScroll);
+    }, []);
+
+    const scroll = (dir: "left" | "right") => {
+        if (!scrollRef.current) return;
+        const offset = 200; // шаг скролла
+        scrollRef.current.scrollBy({
+        left: dir === "left" ? -offset : offset,
+        behavior: "smooth",
+        });
+    };
 
     return (
         <div className={s.pageLayer}>
@@ -40,22 +69,39 @@ export const Miner = () => {
                             </div>
                         </div>
                     </div>
-                    <div className={s.coefficientsInfo}>
-                        <div><p>x1.2</p><p className={s.stepNum}>1 step</p></div>
-                        <div><p>x1.46</p><p className={s.stepNum}>2 steps</p></div>
-                        <div><p>x1.2</p></div>
-                        <div><p>x1.46</p></div>
-                        <div><p>x1.2</p></div>
-                        <div><p>x1.46</p></div>
-                        <div><p>x1.2</p></div>
-                        <div><p>x1.46</p></div>
-                        <div><p>x1.2</p></div>
-                        <div><p>x1.46</p></div>
-                        <div><p>x1.2</p></div>
-                        <div><p>x1.46</p></div>
+                    <div className={s.coefficientsWrapper}>
+                        {showLeft && (
+                            <img
+                            src={"/imgs/icons/angle-small-left.svg"}
+                            className={`${s.scrollBtn} ${s.left}`}
+                            onClick={() => scroll("left")}
+                            >
+                            </img>
+                        )}
+
+                        <div
+                            ref={scrollRef}
+                            onScroll={checkScroll}
+                            className={s.coefficientsInfo}
+                        >
+                            {Array.from({ length: 22 }).map((_, i) => (
+                            <div key={i}>
+                                <p>x1.{i + 1}</p>
+                                <p className={s.stepNum}>{i + 1} step</p>
+                            </div>
+                            ))}
+                        </div>
+
+                        {showRight && (
+                            <img
+                            src={"/imgs/icons/angle-small-right.svg"}
+                            className={`${s.scrollBtn} ${s.right}`}
+                            onClick={() => scroll("right")}
+                            >
+                            </img>
+                        )}
                     </div>
                 </div>
-
                 <div className={s.minerSettingsBlock}>
                     <div className={s.settingsHeader}><h3>Settings</h3></div>
                     <div className={s.balanseBlock}>

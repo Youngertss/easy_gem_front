@@ -70,6 +70,7 @@
     align-items: center;
     justify-content: space-evenly;
     width: 210px;
+    user-select: none;
 
     .goldBarsStuckBlock{
         width: 90%;
@@ -195,10 +196,14 @@
 };
 
 
-.coefficientsInfo{
+.coefficientsWrapper {
+    position: relative;
+    width: 100%;
+}
+
+.coefficientsInfo {
     display: flex;
     flex-direction: row;
-    // align-items: center;
     margin-left: 15px;
     margin-top: -10px;
     padding: 10px;
@@ -208,30 +213,53 @@
 
     overflow-x: hidden;
     white-space: nowrap;
-    background-color:#1e2456;
+    background-color: #1e2456;
 
-    div{
+    div {
         margin-right: 10px;
-        background-color:#242b66;
-        padding: 5px 10px 5px 10px;
+        background-color: #242b66;
+        padding: 5px 10px;
         border-radius: 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        p{
-            font-size: 15px;
-            font-weight: bold;
-            margin-bottom: -2px;
-        }
 
-        .stepNum{
-            font-size: 12px;
-            font-weight:normal;
-            color:#3950cf;
-        }
-    }   
+    p {
+        font-size: 15px;
+        font-weight: bold;
+        margin-bottom: -2px;
+        user-select: none;
+    }
 
+    .stepNum {
+        font-size: 12px;
+        font-weight: normal;
+        color: #3950cf;
+    }
+  }
+}
+
+.scrollBtn {
+    position: absolute;
+    top: -1px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    height: 40px;
+    transition: background 0.2s;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.084);
+    };
+
+    &.left {
+        left: 15px;
+    }
+
+    &.right {
+        right: 15px;
+    }
 }
 
 .minerSettingsBlock{
@@ -252,6 +280,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: 5px;
+    user-select: none;
 }
 
 .balanseBlock{
@@ -266,6 +295,7 @@
     margin-bottom: 10px;
     padding-top: 8px;
     padding-bottom: 5px;
+    user-select: none;
 
     p{
         font-size: 20px;
