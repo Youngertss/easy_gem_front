@@ -112,7 +112,7 @@ export const FortuneWheel = () => {
                 // Congretulate user
                 setUser({ //reload mini-profile balance
                     ...userData,
-                    balance: userData.balance + (income - gameData.data.cost)
+                    balance: Number(userData.balance) + (Number(income) - Number(gameData.data.cost))
                 });
 
                 setWin(income);

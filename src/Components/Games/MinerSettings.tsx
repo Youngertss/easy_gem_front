@@ -108,7 +108,7 @@ export const MinerSettings: React.FC<SettingsProps> = ({
             <div className={s.buttonPlayBlock}>
                 { gameStarted
                 ? <button onClick={endGameHandle} className={s.endGameBtn}>
-                    <p>Play</p>
+                    <p>Take the prize</p>
                     <img src={"/imgs/icons/data-mining-outlines.svg"}/>
                 </button>
                 : <button onClick={startGameHandle} className={s.startGameBtn}>

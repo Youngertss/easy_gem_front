@@ -58,6 +58,7 @@ export const SafeHack = () => {
         const data = {
             "sum_bet": sumBet,
             "chance": chance,
+            "coefficient": coefficient,
             "expected_result":expected_result
         }
         let response;

@@ -28,7 +28,10 @@ export const Account: React.FC<AccountProps> = ({openLoggining, openRegistration
                     <div className={s.userName}>{userData.username}</div>
                     {showDropdown && <UserDropdown onLogout={onLogout} />}
                 </div>
-                {userData.balance}$
+                {new Intl.NumberFormat("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }).format(Number(userData.balance))}$
             </div>
         )
     } else{

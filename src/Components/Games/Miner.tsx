@@ -2,12 +2,15 @@ import { useState, useRef, useEffect } from "react";
 import { MineField } from "./MineField"
 import { MinerSettings } from "./MinerSettings"
 
+import axios from "axios";
 import s from "./Miner.module.scss";
 import { useUserStore } from "../../store/userStore";
 
 
 export const Miner = () => {
     const user = useUserStore((set) => (set.user));
+
+    const [coefList, setCoefList] = useState([]);
     //game settings
     const [gameStarted, setGameStarted] = useState(false);
     const [bombsCount, setBombsCount] = useState<number>(3);
@@ -17,6 +20,32 @@ export const Miner = () => {
     const [showLeft, setShowLeft] = useState(false);
     const [showRight, setShowRight] = useState(false);
 
+
+
+    useEffect(() =>{
+        const fetchGameData = async () => {
+            try{
+                const { data } = await axios.get("games/get_game", {
+                    params: {
+                        id: 3
+                    },
+                    headers: {
+                        "Content-Type": "application/json",
+                        withCredentials: true
+                    }
+                });
+                const data_coefList = data.data.coefficients[bombsCount.toString()];
+                console.log(data_coefList);
+                setCoefList(data_coefList);
+            } catch (e){
+                console.log("Error while fetching Miner gameData",e)
+            }
+        };
+
+        fetchGameData();
+    }, [bombsCount])
+
+    //settings functions START
     const startGameHandle = () => {
         if (gameStarted) return;
         setGameStarted(true);
@@ -33,18 +62,27 @@ export const Miner = () => {
 
     const selectCurrBet = (bet: number, inputBetRef: HTMLInputElement | null) => {
         if (!user || !inputBetRef) return;
-
+        if (gameStarted) {
+            inputBetRef.value = `${currBet}`;
+            return
+        }
         let newBet = bet;
         if (bet < 5) newBet = 5;
         else if (user.balance < bet) newBet = user.balance;
 
         inputBetRef.value = `${newBet}`;
         setCurrBet(newBet);
-        };
+    };
+    //settings functions END
 
+    // Scroll code block START
     const checkScroll = () => {
         const el = scrollRef.current;
         if (!el) return;
+        if (bombsCount==20){
+            setShowLeft(false);
+            setShowRight(false);
+        }
 
         const { scrollLeft, scrollWidth, clientWidth } = el;
 
@@ -53,19 +91,23 @@ export const Miner = () => {
     };
 
     useEffect(() => {
+        const el = scrollRef.current;
+        if (!el) return;
+        el.scrollLeft=0;
         checkScroll(); // проверить при монтировании
         window.addEventListener("resize", checkScroll); // при изменении ширины окна
         return () => window.removeEventListener("resize", checkScroll);
-    }, []);
+    }, [coefList]);
 
     const scroll = (dir: "left" | "right") => {
         if (!scrollRef.current) return;
-        const offset = 200; // шаг скролла
+        const offset = 100; // шаг скролла
         scrollRef.current.scrollBy({
         left: dir === "left" ? -offset : offset,
         behavior: "smooth",
         });
     };
+    // Scroll code block END
 
     return (
         <div className={s.pageLayer}>
@@ -98,6 +140,7 @@ export const Miner = () => {
                             </div>
                         </div>
                     </div>
+                    {/*  COEFFICIENTS BEGINNING */}
                     <div className={s.coefficientsWrapper}>
                         {showLeft && (
                             <img
@@ -113,9 +156,9 @@ export const Miner = () => {
                             onScroll={checkScroll}
                             className={s.coefficientsInfo}
                         >
-                            {Array.from({ length: 22 }).map((_, i) => (
+                            {coefList.map((coef, i) => (
                             <div key={i}>
-                                <p>x1.{i + 1}</p>
+                                <p>x{coef}</p>
                                 <p className={s.stepNum}>{i + 1} step</p>
                             </div>
                             ))}
@@ -130,6 +173,7 @@ export const Miner = () => {
                             </img>
                         )}
                     </div>
+                    {/*  COEFFICIENTS ENDING */}
                 </div>
                 <MinerSettings
                     gameStarted={gameStarted} bombsCount={bombsCount}
