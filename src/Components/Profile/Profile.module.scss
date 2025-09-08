@@ -170,6 +170,37 @@ hr {
     };
 }
 
+.extraData{
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    justify-content: center;
+    max-height: 100px;
+    color:beige;
+
+    div{
+        margin-bottom: 5px;
+        font-size: 15px;
+    }
+
+    .coef{
+        color:rgb(217, 255, 159);
+    }
+
+    .coefRed{
+        color:rgb(255, 159, 159);
+    }
+
+    .bombs_count{
+        display: flex;
+        flex-direction: row;
+        img{   
+            margin-left: 5px;
+            width: 15px;
+        }
+    }
+}
+
 .profileGamePic{
     width: 110px;
     height: 80px;

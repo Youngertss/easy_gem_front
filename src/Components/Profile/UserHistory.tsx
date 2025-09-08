@@ -21,6 +21,11 @@ interface UserHistoryProps{
     profileUser: UserData
 };
 
+interface ExtraData{
+    coefficient: number | null;
+    bombs_count: number | null;
+};
+
 interface GameData {
     id: number;
     name: string;
@@ -37,6 +42,7 @@ interface GameHistoryItem {
     bet: number;
     income: number;
     played_at: string;
+    extra_data: ExtraData | null
     game: GameData;
 }
 
@@ -75,7 +81,19 @@ export const UserHistory: React.FC<UserHistoryProps> = ({ profileUser }) => {
                             <div style={{"minWidth": "150px", "marginRight": "5%"}}>
                                 <NavLink to={"/" + item.game.name}>{item.game.name}</NavLink>
                             </div>
-                            <p style={{color: "rgba(28, 154, 221, 1)"}}>{item.bet}$</p>
+                            <div style={{"minWidth": "100px", "marginRight": "15%"}}>
+                                <p style={{color: "rgba(28, 154, 221, 1)"}}>{item.bet}$</p>
+                            </div>
+                            <div className={s.extraData}>
+                                {item.income > item.bet 
+                                ? <div className={s.coef}>x{item.extra_data?.coefficient}</div>
+                                : <div className={s.coefRed}>x{0}</div>
+                                }
+                                { item.extra_data?.bombs_count 
+                                   ? <div className={s.bombs_count}><p>{item.extra_data?.bombs_count}</p><img src={"/imgs/icons/bomb.svg"}/></div>
+                                   : ""
+                                }
+                            </div>
                         </div>
                     </div>
                     <div className={s.gameIncomeRow}>
