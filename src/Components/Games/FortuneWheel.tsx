@@ -4,7 +4,7 @@ import axios from "axios";
 
 import {FortuneWheelCanvas} from "./GameCanvas/FortuneWheelCanvas";
 import { useUserStore } from "../../store/userStore";
-import {PrizeWindow} from "./PrizeWindow";
+import {PrizeWindow} from "./FortuneWheelPrizeWindow";
 
 interface GameData{
     name: string

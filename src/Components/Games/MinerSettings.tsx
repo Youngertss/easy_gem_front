@@ -30,7 +30,12 @@ export const MinerSettings: React.FC<SettingsProps> = ({
                     <img src="/imgs/icons/wallet.svg" alt="" />
                 </div>
                 <div className={s.balanseSum}>
-                    <p>{user?.balance}$</p>
+                    <p>
+                        {new Intl.NumberFormat("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                        }).format(Number(user?.balance))}$
+                    </p>
                     <p style={{ "fontSize": "14px"   }}>Balance</p>
                 </div>
             </div>

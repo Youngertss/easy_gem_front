@@ -11,13 +11,24 @@ interface Cell {
     value: number;
     opened: boolean;
     rotation: number;
+    exploded: boolean;
+}
+
+interface WinData{
+    lost: boolean
+    income: number
+    coeff: number
 }
 
 export const Miner = () => {
     const user = useUserStore((set) => (set.user));
+    const setUser = useUserStore((set) => (set.setUser));
 
     const [cellsList, setCellsList] = useState<Cell[]>([]);
     const [coefList, setCoefList] = useState([]);
+    const [showPrize, setShowPrize] = useState(false);
+    const [winData, setWinData] = useState<WinData | null>(null);
+    const [currStep, setCurrStep] = useState(0);
     //game settings
     const [gameStarted, setGameStarted] = useState(false);
     const [bombsCount, setBombsCount] = useState<number>(3);
@@ -27,6 +38,14 @@ export const Miner = () => {
     const [showLeft, setShowLeft] = useState(false);
     const [showRight, setShowRight] = useState(false);
 
+    const closePrizeWindow = () => {
+        setShowPrize(false); 
+    };
+
+    const incrStep = () => {
+        const newCountSteps = currStep + 1
+        setCurrStep(newCountSteps);
+    }
 
     useEffect(() =>{
         const fetchGameData = async () => {
@@ -54,13 +73,15 @@ export const Miner = () => {
     const turnCellHadnle = (id: number) => {
         setCellsList(prev =>
             prev.map((cell, idx) =>
-                idx === id ? { ...cell, opened: true } : cell
+                idx === id ? { ...cell, opened: true, exploded: true } : cell
             )
         );
 
         if (!cellsList[id].value) {
             endGameHandle(false);
+            return;
         }
+        incrStep()
     };
 
     //settings functions START
@@ -79,24 +100,40 @@ export const Miner = () => {
         } catch(e){
             console.log("error while startin Miner game", e)
         }
-
+        if (user){
+            setUser({ 
+                ...user,
+                balance: user.balance - currBet
+            }); 
+        }
         setGameStarted(true);
     };
 
     const endGameHandle = async (isWinner: boolean) => {
         if (!gameStarted) return;
 
-        let coefficient = -1
+        const openedCount = cellsList.filter(cell => cell.opened).length;
+        let coefficient: number = coefList[(openedCount-1)]
         if (isWinner){
-            const openedCount = cellsList.filter(cell => cell.opened).length;
             if (!openedCount){
                 alert("You have to choose at least 1 cell");
                 return;
             }
-            coefficient = coefList[(openedCount-1)]
-            alert("You have won, congruts!")
+            const income = parseFloat((coefficient * currBet).toFixed(2));
+            setWinData({
+                "lost": !isWinner,
+                "income": income,
+                "coeff": coefficient
+            })
         } else{
-            alert("You LOST OH NOOOOOO")
+            coefficient = coefList[(openedCount)]
+            const income = parseFloat((coefficient * currBet).toFixed(2));
+            setWinData({
+                "lost": !isWinner,
+                "income": income,
+                "coeff": coefficient
+            });
+            coefficient = -1;
         };
 
         const data_to_send = {
@@ -105,13 +142,29 @@ export const Miner = () => {
             "bombs_count": bombsCount
         }
         console.log("data_to_send Miner:", data_to_send)
-
+        try{
+            const response = await axios.get("/games/finish_miner_event", {
+                params: data_to_send,
+                withCredentials: true
+            })
+            const income = response.data.income;
+            if (user){
+                setUser({ 
+                    ...user,
+                    balance: parseFloat((user.balance + income).toFixed(2))
+                }); 
+            }
+        } catch(e){
+            console.log("Error while sending Miner end_game_data", e)
+        }
 
         setCellsList(prev =>
             prev.map((cell) =>
                 ({ ...cell, opened: true })
             )
         );
+        setShowPrize(true);
+        setCurrStep(0);
         setGameStarted(false);
     };
 
@@ -173,7 +226,14 @@ export const Miner = () => {
             <div className={s.minerGameLayer}>
                 <div className={s.minerPlayBlock}>
                     <div className={s.mineBlock}>
-                        <MineField gameStarted={gameStarted} cellsList={cellsList} turnCellHadnle={turnCellHadnle}/>
+                        <MineField 
+                            gameStarted={gameStarted} 
+                            cellsList={cellsList} 
+                            turnCellHadnle={turnCellHadnle} 
+                            showPrize={showPrize} 
+                            closePrizeWindow={closePrizeWindow}
+                            winData={winData}
+                        />
                         <div className={s.minerGameStatusInfo}>
                             <div className={s.goldBarsStuckBlock}>
                                 <div className={s.goldBarsStatusInfo}>
@@ -216,7 +276,7 @@ export const Miner = () => {
                             className={s.coefficientsInfo}
                         >
                             {coefList.map((coef, i) => (
-                            <div key={i}>
+                            <div key={i} className={i+1 == currStep ? s.currStep : ""}>
                                 <p>x{coef}</p>
                                 <p className={s.stepNum}>{i + 1} step</p>
                             </div>
