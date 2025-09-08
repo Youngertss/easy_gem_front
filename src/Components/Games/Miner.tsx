@@ -6,10 +6,17 @@ import axios from "axios";
 import s from "./Miner.module.scss";
 import { useUserStore } from "../../store/userStore";
 
+interface Cell {
+    id: number;
+    value: number;
+    opened: boolean;
+    rotation: number;
+}
 
 export const Miner = () => {
     const user = useUserStore((set) => (set.user));
 
+    const [cellsList, setCellsList] = useState<Cell[]>([]);
     const [coefList, setCoefList] = useState([]);
     //game settings
     const [gameStarted, setGameStarted] = useState(false);
@@ -19,7 +26,6 @@ export const Miner = () => {
     const scrollRef = useRef<HTMLDivElement>(null);
     const [showLeft, setShowLeft] = useState(false);
     const [showRight, setShowRight] = useState(false);
-
 
 
     useEffect(() =>{
@@ -35,7 +41,7 @@ export const Miner = () => {
                     }
                 });
                 const data_coefList = data.data.coefficients[bombsCount.toString()];
-                console.log(data_coefList);
+                // console.log(data_coefList);
                 setCoefList(data_coefList);
             } catch (e){
                 console.log("Error while fetching Miner gameData",e)
@@ -45,14 +51,67 @@ export const Miner = () => {
         fetchGameData();
     }, [bombsCount])
 
+    const turnCellHadnle = (id: number) => {
+        setCellsList(prev =>
+            prev.map((cell, idx) =>
+                idx === id ? { ...cell, opened: true } : cell
+            )
+        );
+
+        if (!cellsList[id].value) {
+            endGameHandle(false);
+        }
+    };
+
     //settings functions START
-    const startGameHandle = () => {
+    const startGameHandle = async () => {
         if (gameStarted) return;
+        try{
+            const data_to_send = {
+                "sum_bet": currBet,
+                "bombs_count": bombsCount
+            };
+            const response = await axios.get("/games/start_miner_event", {
+                params: data_to_send,
+                withCredentials: true
+            });
+            setCellsList(response.data.cells);
+        } catch(e){
+            console.log("error while startin Miner game", e)
+        }
+
         setGameStarted(true);
     };
 
-    const endGameHandle = () => {
+    const endGameHandle = async (isWinner: boolean) => {
         if (!gameStarted) return;
+
+        let coefficient = -1
+        if (isWinner){
+            const openedCount = cellsList.filter(cell => cell.opened).length;
+            if (!openedCount){
+                alert("You have to choose at least 1 cell");
+                return;
+            }
+            coefficient = coefList[(openedCount-1)]
+            alert("You have won, congruts!")
+        } else{
+            alert("You LOST OH NOOOOOO")
+        };
+
+        const data_to_send = {
+            "sum_bet": currBet,
+            "coefficient": coefficient,
+            "bombs_count": bombsCount
+        }
+        console.log("data_to_send Miner:", data_to_send)
+
+
+        setCellsList(prev =>
+            prev.map((cell) =>
+                ({ ...cell, opened: true })
+            )
+        );
         setGameStarted(false);
     };
 
@@ -114,7 +173,7 @@ export const Miner = () => {
             <div className={s.minerGameLayer}>
                 <div className={s.minerPlayBlock}>
                     <div className={s.mineBlock}>
-                        <MineField gameStarted={gameStarted}/>
+                        <MineField gameStarted={gameStarted} cellsList={cellsList} turnCellHadnle={turnCellHadnle}/>
                         <div className={s.minerGameStatusInfo}>
                             <div className={s.goldBarsStuckBlock}>
                                 <div className={s.goldBarsStatusInfo}>

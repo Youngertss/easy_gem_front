@@ -8,7 +8,7 @@ interface SettingsProps {
     bombsCount: number;
     currBet: number;
     startGameHandle: () => void;
-    endGameHandle: () => void;
+    endGameHandle: (isWinner: boolean) => void;
     selectCountBombs: (count: number) => void;
     selectCurrBet: (bet: number, inputBetRef: HTMLInputElement | null) => void;
 }
@@ -107,7 +107,7 @@ export const MinerSettings: React.FC<SettingsProps> = ({
             </div>
             <div className={s.buttonPlayBlock}>
                 { gameStarted
-                ? <button onClick={endGameHandle} className={s.endGameBtn}>
+                ? <button onClick={() => endGameHandle(true)} className={s.endGameBtn}>
                     <p>Take the prize</p>
                     <img src={"/imgs/icons/data-mining-outlines.svg"}/>
                 </button>
