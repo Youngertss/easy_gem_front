@@ -52,7 +52,7 @@ export const Miner = () => {
             try{
                 const { data } = await axios.get("games/get_game", {
                     params: {
-                        id: 3
+                        "name": "Miner"
                     },
                     headers: {
                         "Content-Type": "application/json",
