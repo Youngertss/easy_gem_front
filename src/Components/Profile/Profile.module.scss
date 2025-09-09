@@ -201,6 +201,26 @@ hr {
     }
 }
 
+.loadMore{
+    width: 98%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    button{
+        color:rgb(164, 164, 164);
+        font-size: 20px;
+        border: none;
+        background-color: #191d3e;
+    }
+    button:hover{
+        color:rgb(190, 190, 190);
+    }
+}
+
+//profile
+
 .profileGamePic{
     width: 110px;
     height: 80px;

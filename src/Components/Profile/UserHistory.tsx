@@ -48,6 +48,30 @@ interface GameHistoryItem {
 
 export const UserHistory: React.FC<UserHistoryProps> = ({ profileUser }) => {
     const [userHistory, setUsetHistory] = useState<GameHistoryItem[]>([]);
+    const [lastId, setLastId] = useState<number | null>(null);
+    const [hasMore, setHasMore] = useState(false);
+
+    const loadMoreHistory = async () => {
+        if (!hasMore) return;
+
+        try {
+            const response = await axios.get("/games/get_user_history/"+profileUser.id, {
+                params: {
+                    "last_id": lastId
+                },
+                withCredentials: true,
+            });
+            console.log("History from back", response.data);
+
+            const history = response.data.history
+            setLastId(history.length ? history[history.length - 1].id : null)
+            setHasMore(response.data.has_more)
+
+            setUsetHistory(prevHistory => [...prevHistory, ...history]);
+        } catch (e) {
+            console.log("Error while loading more userHistory", e)
+        }
+    };
 
     useEffect(() => {
         const fetchUserHistory = async () => {
@@ -56,7 +80,12 @@ export const UserHistory: React.FC<UserHistoryProps> = ({ profileUser }) => {
                     withCredentials: true,
                 });
                 console.log("History from back", response.data);
-                setUsetHistory(response.data);
+
+                const history = response.data.history
+                setLastId(history.length ? history[history.length - 1].id : null)
+                setHasMore(response.data.has_more)
+
+                setUsetHistory(history);
             } catch (e) {
                 console.log("Error while fetching userHistory", e)
             }
@@ -109,6 +138,10 @@ export const UserHistory: React.FC<UserHistoryProps> = ({ profileUser }) => {
                 </div>
             ))
                 : null}
+            {hasMore
+            ? <div className={s.loadMore}><button onClick={loadMoreHistory}>Load more...</button></div>
+            : null
+            }
         </div>
     )
 };
