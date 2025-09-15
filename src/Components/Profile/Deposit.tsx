@@ -28,7 +28,7 @@ export const Deposit = () =>{
                 });    
             setUser({
                 ...user,
-                balance: user.balance + parseInt(sum)
+                balance: Number(user.balance) + parseInt(sum)
             }); 
         } catch(error){
             console.log(error);

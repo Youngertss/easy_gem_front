@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom"
 import s from "./Profile.module.scss";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, NavLink} from "react-router-dom";
 
 import { useUserStore } from "../../store/userStore";
 import { SelectionHeader } from "./SelectionHeader";
@@ -67,13 +67,13 @@ export const UserProfile = () =>{
         setAvatarPreview(profileUser.photo);
 
         const fetchFavGame = async () => {
-            if (!profileUser.favorite_game_id) {
+            if (!profileUser.favorite_game_id || profileUser.favorite_game_id == -1) {
                 setFavGame("-");
                 return;
             }
 
             try {
-                const response = await axios.get(`/games/get_game/${profileUser.favorite_game_id}`, {
+                const response = await axios.get(`/games/get_game?id=${profileUser.favorite_game_id}`, {
                     withCredentials: true,
                 });
                 setFavGame(response.data.name);
@@ -146,7 +146,10 @@ export const UserProfile = () =>{
                 <div className = {s.userStats}>
                     <p>Withdrawals sum: {profileUser?.total_withdrawn}</p>
                     <p>Count of withdrawals: {profileUser?.total_withdrawals}</p>
-                    <p style={{paddingTop: "10px"}}>{"Favorute game: "+ favGame}</p>
+                    <div className={s.favGameStats}>
+                        <p>Favorite game:</p>
+                        <NavLink className={s.favGame} to={"/" + favGame}>{favGame}</NavLink>
+                    </div>
                 </div>
             </div>
             

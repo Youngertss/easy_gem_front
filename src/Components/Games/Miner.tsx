@@ -86,7 +86,7 @@ export const Miner = () => {
 
     //settings functions START
     const startGameHandle = async () => {
-        if (gameStarted) return;
+        if (gameStarted || !user || user.balance < currBet) return;
         try{
             const data_to_send = {
                 "sum_bet": currBet,

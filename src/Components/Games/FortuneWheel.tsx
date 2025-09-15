@@ -44,7 +44,7 @@ export const FortuneWheel = () => {
                 }
             });  
             setGameData(gameDataCurr.data);
-            console.log(gameData);
+            console.log(gameDataCurr);
         };
         getGameData();
         setAngle(sectorAngle / 2);

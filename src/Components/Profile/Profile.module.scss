@@ -99,7 +99,31 @@ hr {
     margin-top: 20px;
     display: flex;
     flex-direction:column;
+
+    .favGameStats{
+        margin-top: 10px;
+        display: flex;
+        flex-direction:row;
+        width: fit-content;
+        height: fit-content;
+        p{
+            margin-right: 5px;
+        }
+    }
 }
+
+.favGame{
+    color:rgb(238, 165, 232);
+    font-size:19px;
+    text-decoration: none;
+
+    &:hover{
+        color: rgb(238, 205, 235);
+    };
+}
+
+
+//---USERHISTORY---
 
 .userHistory{
     display: flex;
