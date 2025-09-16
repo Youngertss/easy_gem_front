@@ -5,16 +5,19 @@ import s from "./App.module.scss";
 import { Header } from "./Components/Header/Header";
 import { ModalReg } from "./Components/Header/authorizing/ModalReg";
 import { ModalLog } from "./Components/Header/authorizing/ModalLog";
-import { SideBar } from "./Components/SideBar/SideBar";
+
 import { MainPage } from "./Components/MainPage/MainPage";
+import { SideBar } from "./Components/SideBar/SideBar";
+import { Bonuses } from "./Components/Bonuses/Bonuses";
+import { Chat } from "./Components/Chat/Chat";
+import { FAQ } from "./Components/FAQ/FAQ";
+import { Stats } from "./Components/Stats/Stats"
+
 import { Games } from "./Components/Games/Games";
 import { FortuneWheel } from "./Components/Games/FortuneWheel";
 import { SafeHack } from "./Components/Games/SafeHack";
 import { Miner } from "./Components/Games/Miner";
 
-import { Bonuses } from "./Components/Bonuses/Bonuses";
-import { Chat } from "./Components/Chat/Chat";
-import { FAQ } from "./Components/FAQ/FAQ";
 import { UserProfile } from "./Components/Profile/UserProfile";
 import { Deposit } from "./Components/Profile/Deposit";
 import { Settings } from "./Components/Profile/Settings";
@@ -68,6 +71,7 @@ const App = () => {
                 <Route path="/" element={<MainPage />} />
                 <Route path="/MainPage" element={<Games openLoggining={openLoggining}/>} />
                 <Route path="/Games" element={<Games openLoggining={openLoggining}/>} />
+                <Route path="/Stats" element={<Stats />} />
                 <Route path="/Bonuses" element={<Bonuses />} />
                 <Route path="/FAQ" element={<FAQ />} />
 

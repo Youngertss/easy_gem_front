@@ -11,6 +11,8 @@ interface UserData {
     balance: number;
     photo: string;
     favorite_game_id: number;
+    total_earned: number;
+    total_played: number;
     total_withdrawn: number;
     total_withdrawals: number;
     created_at: string;

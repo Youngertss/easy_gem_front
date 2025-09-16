@@ -14,6 +14,8 @@ interface UserData {
     username: string;
     balance: number;
     photo: string;
+    total_earned: number;
+    total_played: number;
     favorite_game_id: number;
     total_withdrawn: number;
     total_withdrawals: number;
@@ -148,7 +150,10 @@ export const UserProfile = () =>{
                     <p>Count of withdrawals: {profileUser?.total_withdrawals}</p>
                     <div className={s.favGameStats}>
                         <p>Favorite game:</p>
+                        {favGame !== "-" ?
                         <NavLink className={s.favGame} to={"/" + favGame}>{favGame}</NavLink>
+                        : "-"
+                        }
                     </div>
                 </div>
             </div>
