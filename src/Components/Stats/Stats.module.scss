@@ -1,13 +1,16 @@
 .initLayer{
     width: 100%;
     height: fit-content;
+    min-width: 900px;
+    position: relative;
 }
 
 .layer{
+    position: relative;
     width: 95%;
     margin-left: 20px;
     min-height: 500px;
-    border: solid 1px white;
+    // border: solid 1px white;
     margin-top: -10px;
 
     display: flex;
@@ -15,16 +18,43 @@
     align-items: center;
     justify-content: center;
 
-    // h2{
-    //     margin-top: 20px;
-    // }
+    overflow: hidden;
+
+    h2{
+        margin-top: -5px;
+        color:rgb(213, 211, 255);
+        margin-bottom: 20px;
+    }
 }
 
 .top3LeadersLayer{
     display: flex;
     justify-content: center;
     width: 100%;
+    margin-bottom: 10px;
 }
+
+.lightRigth{
+    position: absolute;
+    left: 64%;
+    top: -90px;
+    width: 260px;
+    z-index: 1000;
+    border-bottom-left-radius: 300px;
+    border-top-left-radius: 100px;
+}
+
+.lightLeft{
+    position: absolute;
+    left: 10%;
+    top: -90px;
+    width: 260px;
+    z-index: 1000;
+    transform: scaleX(-1);
+    border-bottom-left-radius: 300px;
+    border-top-left-radius: 100px;
+}
+
 
 .top3Leaders{
     display: flex;
@@ -34,14 +64,129 @@
     justify-content: space-between;
 
     width: 80%;
-    height: 500px;
+    height: 670px;
+
+}
+
+.top3LeaderInfoBlock{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    img{
+        width: 110px;
+        height: 110px;
+        object-fit: cover;
+        margin-bottom: 3px;
+    }
+
+    p{
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+
+}
+
+.top3StatsBlock{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
 
     div{
-        width: 200px;
-        height: 400px;
-        background-color: rgba(240, 248, 255, 0.512);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        p:first-child{
+            font-size: 20px;
+        }
+        p:last-child{
+            font-size: 12px;
+        }
     }
 }
+
+.firstPlace{
+    width: 210px;
+    height: 660px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    // background-color: rgba(255, 255, 255, 0.18);
+
+    .leaderPodium{
+        position: relative;
+        height: 480px;
+        width: 100%;
+        background-color: gold;
+        box-shadow: 0px 0px 30px rgb(255, 213, 0);
+        border-radius: 2px;
+    }
+}
+
+.secondPlace{
+    width: 210px;
+    height: 660px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    // background-color: rgba(255, 255, 255, 0.18);
+
+    .leaderPodium{
+        position: relative;
+        height: 400px;
+        width: 100%;
+        background-color: silver;
+        box-shadow: 0px 0px 30px silver;
+        border-radius: 2px;
+    }
+}
+
+
+.thirdPlace{
+    width: 210px;
+    height: 660px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    // background-color: rgba(255, 255, 255, 0.18);
+
+    .leaderPodium{
+        position: relative;
+        height: 350px;
+        width: 100%;
+        background-color: rgb(172, 80, 46);
+        box-shadow: 0px 0px 30px rgb(172, 80, 46);
+        border-radius: 2px;
+    }
+}
+
+.placeTrophy{
+    position: absolute;
+    z-index: 10;
+    top: 30px;
+    width: 90%;
+    left: 5%;
+}
+
+.placeOnTrophy{
+    position: absolute;
+    z-index: 10;
+    top: 44px;
+    width: 13%;
+    left: 44%;
+}
+
+.splitter{
+    width: 100%;
+    height: fit-content;
+}
+// --- Leaderboard at the bottom ---
 
 .leaderboardLayer{
     display: flex;
@@ -50,15 +195,108 @@
 }
 
 .leaderboard{
-    height: 400px;
+    height: fit-content;
     width: 90%;
+    margin-bottom: 20px;
 
     display: flex;
     flex-direction: column;
 
+}
+
+.leaderboardItem{
+    background-color: #5e4d86;
+    border: solid 2px rgb(220, 220, 220);
+    border-radius: 2px;
+    margin-bottom: 5px;
+    height: 70px  ;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    span{
+        height: 100%;
+        width: 70px;
+        border-right: solid 1px rgb(190, 190, 190);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    img{
+        height: 60px;
+        width: 60px;
+        object-fit: cover;
+        margin-left: 5px;
+    }
+}
+
+.leaderboardInfo{
+    height: 100%;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    margin-left: 10px;
+    a{
+        font-size: 18px;
+        margin-bottom: 2px;
+        color: #dddefd;
+    }
     div{
-        background-color: rgba(0, 255, 255, 0.661);
-        margin-bottom: 10px;
-        height: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        justify-content: center;
+        p{
+            font-size: 14px;
+            margin-bottom: 0px;
+            color: #9da1fd;
+        }
+    }
+}
+
+.siteStatisticBlock{
+    width: 95%;
+    height: 130px;
+    background-color: black;
+    border-radius: 50px 50px 0px 0px;
+    color:aliceblue;
+    font-size: 18px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    h3{
+        margin: 5px;
+        margin-top: 10px;
+    }
+}
+
+.siteStatistic{
+    color:aliceblue;
+    font-size: 18px;
+    width: 100%;
+    height: 80%;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
+
+    div:first-child{
+        margin-right: 80px;
+    }
+
+    div:last-child{
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
     }
 }
