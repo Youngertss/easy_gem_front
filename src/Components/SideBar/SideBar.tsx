@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 export const SideBar = () => {
     const location = useLocation();
     const [current_page, setCurrentPage] = useState("MainPage");
-    const pages = ["MainPage", "Games", "Stats", "Bonuses", "FAQ"];
+    const pages = ["MainPage", "Games", "Stats", "Bonuses", "About"];
 
     useEffect (() =>{
         setCurrentPage(window.location.pathname.split("/").filter(Boolean).slice(-1)[0]);

@@ -10,7 +10,7 @@ import { MainPage } from "./Components/MainPage/MainPage";
 import { SideBar } from "./Components/SideBar/SideBar";
 import { Bonuses } from "./Components/Bonuses/Bonuses";
 import { Chat } from "./Components/Chat/Chat";
-import { FAQ } from "./Components/FAQ/FAQ";
+import { About } from "./Components/About/About";
 import { Stats } from "./Components/Stats/Stats"
 
 import { Games } from "./Components/Games/Games";
@@ -73,7 +73,7 @@ const App = () => {
                 <Route path="/Games" element={<Games openLoggining={openLoggining}/>} />
                 <Route path="/Stats" element={<Stats />} />
                 <Route path="/Bonuses" element={<Bonuses />} />
-                <Route path="/FAQ" element={<FAQ />} />
+                <Route path="/About" element={<About />} />
 
                 <Route path="/profile/:profileUsername" element={<UserProfile/>}/>
                 <Route path="/deposite" element={<Deposit/>}/>
