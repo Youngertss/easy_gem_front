@@ -37,7 +37,7 @@ export const Games: React.FC<Props> = ({ openLoggining}) => {
     useEffect (() => {
         const fetchGames = async () =>{
             try{
-                const response = await axios.get("/games/get_all_games/", {
+                const response = await axios.get("/games/get_all_games", {
                     withCredentials: true
                 });
                 setTagGames(response.data.tag_games);
