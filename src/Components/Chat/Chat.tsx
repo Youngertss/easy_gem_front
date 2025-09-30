@@ -39,7 +39,11 @@ export const Chat: React.FC<ChatParams> = ({ openLoggining }) => {
                     setMessages((prev) => [...prev, data]);
                 } else if (data?.messages && data.messages.length !== 0) { // initially loads history of last messages
                     let data_to_chat = data.messages.reverse()
-                    setMessages((prev) => [...prev, ...data_to_chat])
+                    data_to_chat = [
+                    ...data_to_chat,
+                    { author: "CHATBOT", message: "Don't forget to be polite. Have fun!" }
+                    ]
+                    setMessages(data_to_chat)
                 };
             } catch (err) {
                 console.error("Failed to parse WS message:", e.data, err);
@@ -51,6 +55,24 @@ export const Chat: React.FC<ChatParams> = ({ openLoggining }) => {
 
         return () => ws.close(); // clean up
     }, [user?.username]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const mLength = messages.length;
+            let flag = true;
+            for (let i: number = 0; i < 5; i++){
+                if (messages[mLength-i-1].author == "CHATBOT"){
+                    flag=false;
+                    break;
+                }
+            };
+            if (flag){
+                setMessages(prev => [...prev, {author: "CHATBOT", message: "Don't forget to be polite. Have fun!"}])
+            };
+        }, 5 * 60 * 1000); // 5 mins
+
+        return () => clearInterval(interval); 
+    }, []);
 
     const sendMessageHandler = () => {
         if (!user) {
@@ -74,14 +96,27 @@ export const Chat: React.FC<ChatParams> = ({ openLoggining }) => {
         <div className={s.chatLayer}>
             <div id="chatBlock" className={s.chatBlock}>
                 <div className={s.message}>
-                    <u><b><a className={s.messageAuthor}>Server</a></b></u><b>:</b><span>Don't forget to be polite. Have a fun!</span>
+                    <u><b><a>Server</a></b></u><b>:</b><span>Don't forget to be polite. Have a fun!</span>
                 </div>
 
                 {messages.map((msg, index) => (
                     <div key={index} className={s.message}>
-                        <b><NavLink className={s.authorName} to={`/profile/${msg.author}`}>{msg.author}</NavLink>:</b><span>{msg.message}</span>
+                        {msg.author === "CHATBOT" ? (
+                        <>
+                            <b><u>Server</u>:</b><span>{msg.message}</span>
+                        </>
+                        ) : (
+                        <>
+                            <b>
+                            <NavLink className={s.authorName} to={`/profile/${msg.author}`}>
+                                {msg.author}
+                            </NavLink>:
+                            </b>
+                            <span>{msg.message}</span>
+                        </>
+                        )}
                     </div>
-                ))}
+))}
             </div>
             {/* Send a message */}
             <div className={s.sendMessageBlock}>
