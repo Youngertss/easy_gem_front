@@ -101,7 +101,7 @@ export const Chat: React.FC<ChatParams> = ({ openLoggining }) => {
 
                 {messages.map((msg, index) => (
                     <div key={index} className={s.message}>
-                        {msg.author === "CHATBOT" ? (
+                        {msg?.author === "CHATBOT" ? (
                         <>
                             <b><u>Server</u>:</b><span>{msg.message}</span>
                         </>

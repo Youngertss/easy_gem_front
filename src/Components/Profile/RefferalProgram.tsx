@@ -8,7 +8,7 @@ export const RefferalProgram = () =>{
             <hr/>
 
             <div className = {s.infoBody} >
-                NICKNAME AND SO ON
+                No info yet.
             </div>
         </div>
     )
